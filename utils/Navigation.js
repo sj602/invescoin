@@ -23,13 +23,12 @@ export const Drawer = DrawerNavigator({
 });
 
 export const Stacks = StackNavigator({
-  Home: {screen: Drawer},
+  Home: { screen: Drawer },
 },
-  {
-    navigationOptions: {
-      headerStyle: {backgroundColor: 'black'},
-      title: 'InvesCoin',
-      headerTintColor: 'white',
-      marginTop: 25
-  }
+{
+  navigationOptions: {
+    headerStyle: {backgroundColor: 'black'},
+    title: 'InvesCoin',
+    headerTintColor: 'white',
+}
 });
