@@ -15,7 +15,13 @@ export default class Home extends Component {
           Market : Compare each famous Cryptocurrencies' Market for Bitcoin's price
         </Text>
         <Text>
-          Tweets : Keep trendy reading tweets from famous Cryptocurrency tweeterians 
+          Tweets : Keep trendy reading tweets from famous Cryptocurrency tweeterians
+        </Text>
+        <Text>
+          Calendar : Check Cryptocurrency Events!! It is IMPORTANT to know them
+        </Text>
+        <Text>
+          Donate : Donate here :)
         </Text>
 
 

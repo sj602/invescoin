@@ -3,6 +3,9 @@ import Home from '../components/Home';
 import Bubble from '../components/Bubble';
 import Tweets from '../components/Tweets';
 import Market from '../components/Market';
+import Calendar from '../components/Calendar';
+import Balance from '../components/Balance';
+import Donate from '../components/Donate';
 
 export const Drawer = DrawerNavigator({
   Home: {
@@ -19,6 +22,15 @@ export const Drawer = DrawerNavigator({
   },
   Market: {
     screen: Market
+  },
+  Calendar: {
+    screen: Calendar
+  },
+  Balance: {
+    screen: Balance
+  },
+  Donate: {
+    screen: Donate
   }
 });
 
