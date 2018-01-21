@@ -21,12 +21,21 @@
   "dependencies": {
     "expo": "^23.0.4",
     "google-trends-api": "^4.3.0",
+    "https": "^1.0.0",
     "react": "16.0.0",
     "react-native": "0.50.3",
     "react-native-charts-wrapper": "^0.4.1",
     "react-native-vector-icons": "^4.4.3",
     "react-navigation": "^1.0.0-beta.22",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
   }
 }

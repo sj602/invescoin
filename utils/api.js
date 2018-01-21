@@ -1,11 +1,12 @@
 const Korbit_URL = `https://api.korbit.co.kr/v1/ticker`;
 const Bithumb_URL = `https://api.bithumb.com/public/ticker`;
 const Coinone_URL = `https://api.coinone.co.kr/ticker`;
-const Upbit_URL = `https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/1?code=CRIX.UPBIT.KRW-BTC`;
+const Upbit_URL = `https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/1?code=CRIX.UPBIT.KRW-`;
 const Coinmarketcap_URL = `https://api.coinmarketcap.com/v1/`;
 const Bittrex_URL = `https://bittrex.com/api/v1.1/public/getmarketsummary`;
 const Dollar_URL = `http://api.fixer.io/latest?base=USD`;
 const Balance_URL = `https://blockchain.info/ko/rawaddr/`;
+const Transactions_URL = `https://api.blockchain.info/stats`;
 
 const headers = {
   'Accept': 'application/json',
@@ -25,9 +26,9 @@ export const marketKorbit = () => {
   .catch(e => console.log('Error occurred : ', e))
 }
 
-export const marketBithumb = () => {
+export const marketBithumb = (coin) => {
   return fetch(
-    `${Bithumb_URL}/BTC`,
+    `${Bithumb_URL}/${coin}`,
     {
       method: 'GET',
       headers,
@@ -52,9 +53,9 @@ export const marketCoinone = () => {
   .catch(e => console.log('Error occurred : ', e))
 }
 
-export const marketUpbit = () => {
+export const marketUpbit = (coin) => {
   return fetch(
-    `${Upbit_URL}`,
+    `${Upbit_URL}${coin}`,
     {
       method: 'GET',
       headers,
@@ -65,9 +66,9 @@ export const marketUpbit = () => {
   .catch(e => console.log('Error occurred : ', e))
 }
 
-export const marketBittrex = () => {
+export const marketBittrex = (coin) => {
   return fetch(
-    `${Bittrex_URL}?market=usdt-btc`,
+    `${Bittrex_URL}?market=usdt-${coin}`,
     {
       method: 'GET',
       headers,
@@ -78,16 +79,15 @@ export const marketBittrex = () => {
   .catch(e => console.log('Error occurred : ', e))
 }
 
-export const getMarketCap = (coin) => {
+export const getMarketCap = (coin, currency) => {
   return fetch(
-    `${Coinmarketcap_URL}ticker/${coin}/?convert=KRW`,
+    `${Coinmarketcap_URL}ticker/${coin}/?convert=${currency}`,
     {
       method: 'GET',
       headers,
     }
   )
   .then(res => res.json())
-  .then(data => data[0]['market_cap_krw'])
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -128,4 +128,18 @@ export const getBalance = (address) => {
   )
   .then(res => res.json())
   .then(data => data['final_balance'])
+}
+
+///////////////////////////////// Bubble APIs ///////////////////////////////
+
+export const getTransactions = (coin) => {
+  return fetch(
+    `${Transactions_URL}`,
+    {
+      method: 'GET',
+      headers,
+    }
+  )
+  .then(res => res.json())
+  .then(data => data['estimated_transaction_volume_usd'])
 }

@@ -9,7 +9,7 @@ export default class Home extends Component {
           InvesCoin
         </Text>
         <Text>
-          Bubble : Get noticed if Bitcoin is in a BUBBLE in a simple way
+          Bubble : Get notified if Bitcoin is in a BUBBLE in a simple way
         </Text>
         <Text>
           Market : Compare each famous Cryptocurrencies' Market for Bitcoin's price
@@ -23,8 +23,6 @@ export default class Home extends Component {
         <Text>
           Donate : Donate here :)
         </Text>
-
-
       </View>
     )
   }
