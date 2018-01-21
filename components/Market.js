@@ -4,49 +4,20 @@ import {
   ScrollView, TextInput
 } from 'react-native';
 import { connect } from 'react-redux';
+import Crypto from './Crypto';
 import {
   getMarketCap,
   getGlobalInfo,
+  getCoinPrice,
 } from '../actions/index';
 import * as api from '../utils/api';
 import { cryptoList } from '../utils/cryptoList';
 
 class Market extends Component {
-  // state = {
-  //   totalMarketCap: '',
-  //   bitcoinPercentage: '',
-  //   searchValue: '',
-  //   marketCapBTC: '',
-  //   marketKorbitPrice: '',
-  //   marketBithumbPrice: '',
-  //   marketCoinonePrice: '',
-  //   marketUpbitPrice: '',
-  //   marketBittrexPrice: '',
-  //   dollarWonPrice: '',
-  //   kimchiPremium: '',
-  //   kpPercent: '',
-  // }
+  state = {
+    searchValue: '',
+  }
 
-  // componentDidMount() {
-  //   // update all apis every 2 seconds
-  //   setInterval(() => {
-  //     this.getGlobalInfoFunc();
-  //     this.getMarketCapFunc('bitcoin', 'KRW');
-  //     this.fetchCrypto()
-  //   }, 2000);
-  // }
-  //
-  // fetchCrypto() {
-  //   console.log(cryptoList)
-  //   for(let coin in cryptoList) {
-  //     // this.getKorbitFunc();
-  //     this.getBithumbFunc(coin.symbolBig);
-  //     // this.getCoinoneFunc();
-  //     this.getUpbitFunc(coin.symbolBig);
-  //     this.getBittrexFunc(coin.symbolSmall);
-  //     this.getWonByDollarFunc();
-  //   }
-  // }
   //
   // getGlobalInfoFunc() {
   //   return api.getGlobalInfo().then(data => {
@@ -74,13 +45,6 @@ class Market extends Component {
   //   });
   // }
 
-  // getBithumbFunc() {
-  //   return api.marketBithumb().then(data => {
-  //     data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //     this.setState({marketBithumbPrice : '￦ ' + data});
-  //   });
-  // }
-
   // getCoinoneFunc() {
   //   return api.marketCoinone().then(data => {
   //     data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -88,13 +52,6 @@ class Market extends Component {
   //   });
   // }
 
-  // getUpbitFunc() {
-  //   return api.marketUpbit().then(data => {
-  //     data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //     this.setState({marketUpbitPrice : '￦ ' + data});
-  //   })
-  // }
-  //
   // getBittrexFunc() {
   //   return api.marketBittrex().then(data => {
   //     data = data.toFixed(0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -125,20 +82,54 @@ class Market extends Component {
   //
 
   componentDidMount() {
-    this.props.getMarketCap('bitcoin', 'KRW').then(data => data[0]['market_cap_krw'])
-;
-    this.props.getGlobalInfo();
+    // update info every 10 secs
+    // setInterval(() => {
+      this.props.getMarketCap('bitcoin');
+      this.props.getGlobalInfo();
+    // }, 10000);
+    this.fetchCrypto();
   }
 
+  fetchCrypto() {
+    for(let coin in cryptoList) {
+      this.props.getCoinPrice(cryptoList[coin]);
+    //   this.getWonByDollarFunc();
+    }
+  }
+
+  // renderCrypto() {
+  //   return (
+  //     <Crypto />
+  //   )
+  // }
+
+
   render() {
+    let { marketCap, bitcoinPercentage } = this.props.state.market;
+
     return (
       <View>
         <Text>
-          {this.props.market}
+          -- Cryptocurrencies Global Info --
         </Text>
         <Text>
-          {this.props.bitcoinPercentage}
+          Total Market Cap : {marketCap}
         </Text>
+        <Text>
+          Bitcoin % of Total Market Cap : {bitcoinPercentage}
+        </Text>
+
+        <ScrollView>
+          <TextInput
+           value={this.state.searchValue}
+           onChange={(searchValue) => this.setState({searchValue})}
+           placeholder='Search'
+          />
+
+          <Crypto coins={this.props.state.market.coins}/>
+        </ScrollView>
+
+
       </View>
     )
   }
@@ -146,61 +137,12 @@ class Market extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    market: state.market,
-    bitcoinPercentage: state.bitcoinPercentage
+    state
   }
 }
 
 export default connect(mapStateToProps, {
   getMarketCap,
-  getGlobalInfo
+  getGlobalInfo,
+  getCoinPrice,
 })(Market)
-
-
-/*
-<View>
-  <Text>
-    -- Cryptocurrencies Global Info --
-  </Text>
-  <Text>
-    Total Market Cap : {this.state.totalMarketCap} {this.state.change}
-  </Text>
-  <Text>
-    Bitcoin % of Total Market Cap : {this.state.bitcoinPercentage}
-  </Text>
-  <Text>
-    BTC : {this.state.marketCapBTC}
-  </Text>
-
-  <ScrollView>
-    <TextInput
-     value={this.state.searchValue}
-     onChange={(searchValue) => this.setState({searchValue})}
-     placeholder='Search'
-    />
-    <Text>
-      -- BTC Price for each exchanges --
-    </Text>
-    <Text>
-      Bithumb : {this.state.marketBithumbPrice}
-    </Text>
-    <Text>
-      Upbit : {this.state.marketUpbitPrice}
-    </Text>
-    <Text>
-      해외 시세
-    </Text>
-    <Text>
-      달러 가격(Bittrex) : {this.state.marketBittrexPrice}
-    </Text>
-    <Text>
-      달러 가격(원) : {this.state.dollarWonPrice}
-    </Text>
-    <Text>
-      김치 프리미엄 : {this.state.kimchiPremium} {this.state.kpPercent}
-    </Text>
-  </ScrollView>
-
-</View>
-
-*/

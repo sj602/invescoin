@@ -79,15 +79,16 @@ export const marketBittrex = (coin) => {
   .catch(e => console.log('Error occurred : ', e))
 }
 
-export const getMarketCap = (coin, currency) => {
+export const getMarketCap = (coin) => {
   return fetch(
-    `${Coinmarketcap_URL}ticker/${coin}/?convert=${currency}`,
+    `${Coinmarketcap_URL}ticker/${coin}/?convert=KRW`,
     {
       method: 'GET',
       headers,
     }
   )
   .then(res => res.json())
+  .then(data => data[0]['market_cap_krw'])
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -100,6 +101,7 @@ export const getGlobalInfo = () => {
     }
   )
   .then(res => res.json())
+  .then(data => data['bitcoin_percentage_of_market_cap'])
   .catch(e => console.log('Error occurred : ', e))
 }
 

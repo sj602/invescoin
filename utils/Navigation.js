@@ -1,6 +1,6 @@
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import React from 'react';
-import { Platform, StatusBar, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Home from '../components/Home';
 import Bubble from '../components/Bubble';
 import Tweets from '../components/Tweets';

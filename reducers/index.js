@@ -1,40 +1,39 @@
 import { combineReducers } from 'redux';
 import {
   GET_MARKET_CAP,
-  GET_MARKET_CAP_SUCCESS,
-  GET_MARKET_CAP_FAIL,
   GET_GLOBAL_INFO,
-} from '../actions';
+  GET_COIN_PRICE,
+} from '../actions/types';
 
 // function bubbleReducer(state = {}, action) {
 //   switch (action.type) {
 //   }
 // }
 
-const initialState = {
-  isFetching: null,
-  data: '',
-  hasError: false,
-  errorMessage: null,
-}
-
-export default function reducer(state = initialState, action) {
+function marketReducer(state = {}, action) {
   switch (action.type) {
     case GET_MARKET_CAP:
-      console.log(2)
-      return ;
-    case GET_MARKET_CAP_SUCCESS:
-      console.log('success')
-    case GET_MARKET_CAP_FAIL:
       return {
         ...state,
-        marketCap: action.err
+        marketCap: action.data
       }
     case GET_GLOBAL_INFO:
-      console.log('action')
       return {
         ...state,
-        bitcoinPercentage: action.bitcoinPercentage
+        bitcoinPercentage: action.data
+      }
+    case GET_COIN_PRICE:
+      return {
+        ...state,
+        coins: {
+          ...state.coins,
+          [action.coin.name]: {
+            ...state.coins[action.coin.name],
+            bithumbPrice: action.bithumbPrice,
+            upbitPrice: action.upbitPrice,
+            bittrexPrice: action.bittrexPrice
+          }
+        },
       }
     default:
       return state;
@@ -45,9 +44,9 @@ export default function reducer(state = initialState, action) {
 //   switch (action.type) {
 //   }
 // }
-
-// export const rootReducer = combineReducers({
-//   // bubbleReducer,
-//   market: marketReducer,
-//   // tweetsReducer,
-// });
+//
+export const rootReducer = combineReducers({
+  // bubbleReducer,
+  market: marketReducer,
+  // tweetsReducer,
+});

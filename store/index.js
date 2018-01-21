@@ -6,13 +6,13 @@ import {
 import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import reducer from '../reducers';
+import { rootReducer } from '../reducers';
 
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
-  reducer,
-  // composeEnhancers(
-    applyMiddleware(thunk)
-  // )
+  rootReducer,
+  composeEnhancers(
+    applyMiddleware(thunk, promise, logger)
+  )
 );
