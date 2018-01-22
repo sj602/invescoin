@@ -6,34 +6,29 @@ import {
 } from 'react-native';
 
 export default class Crypto extends Component {
-  state = {
-    name: '',
+  constructor(props) {
+    super(props);
+    this.state = props.coins
   }
-
   render() {
     return (
       <View>
         <Text>
-          -- {this.state.name} Price for each exchanges --
+          --- {name} prices ---
         </Text>
         <Text>
-          Bithumb : {this.state.marketBithumbPrice}
+          symbol: {this.props.symbolBig}
         </Text>
         <Text>
-          Upbit : {this.state.marketUpbitPrice}
+          Bithumb: {this.props.bithumbPrice}
         </Text>
         <Text>
-          해외 시세
+          Upbit: {this.props.upbitPrice}
         </Text>
         <Text>
-          달러 가격(Bittrex) : {this.state.marketBittrexPrice}
+          Bittrex: {this.props.bittrexPrice}
         </Text>
-        <Text>
-          달러 가격(원) : {this.state.dollarWonPrice}
-        </Text>
-        <Text>
-          김치 프리미엄 : {this.state.kimchiPremium} {this.state.kpPercent}
-        </Text>
+
       </View>
     )
   }

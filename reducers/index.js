@@ -26,12 +26,12 @@ function marketReducer(state = {}, action) {
       return {
         ...state,
         coins: {
-          ...state.coins,
+          ...(state.coins || {}),
           [action.coin.name]: {
-            ...state.coins[action.coin.name],
+            ...((state.coins && state.coins[action.coin.name]) || {}),
             bithumbPrice: action.bithumbPrice,
             upbitPrice: action.upbitPrice,
-            bittrexPrice: action.bittrexPrice
+            bittrexPrice: action.bittrexPrice 
           }
         },
       }
