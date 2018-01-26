@@ -12,11 +12,11 @@ export default class Donate extends Component {
   click(coin) {
     if(coin === 'BTC') {
       Clipboard.setString(this.state.BTC)
-      return alert('Copied!')
+      return alert('Copied!', 'Thank you for your donation')
     }
     else if(coin === 'ETH') {
       Clipboard.setString(this.state.ETH)
-      return alert('Copied!')
+      return alert('Copied!', 'Thank you for your donation')
     }
   }
 
@@ -35,7 +35,7 @@ export default class Donate extends Component {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.click('ETH')}>
           <Text>
-          
+
             ETH : {this.state.ETH}
           </Text>
         </TouchableOpacity>

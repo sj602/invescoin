@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import {
   View, Text, TouchableOpacity,
-  ScrollView, TextInput
+  ScrollView, TextInput, StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
 import Crypto from './Crypto';
 import {
   getMarketCap,
-  getGlobalInfo,
+  getBTCPercentile,
+  initCoins,
   getCoinPrice,
+  getWonByDollar,
 } from '../actions/index';
 import * as api from '../utils/api';
 import { cryptoList } from '../utils/cryptoList';
@@ -85,48 +87,52 @@ class Market extends Component {
     // update info every 10 secs
     // setInterval(() => {
       this.props.getMarketCap('bitcoin');
-      this.props.getGlobalInfo();
+      this.props.getBTCPercentile();
+      this.props.getWonByDollar();
     // }, 10000);
     this.fetchCrypto();
   }
 
   fetchCrypto() {
     for(let coin in cryptoList) {
+      this.props.initCoins(cryptoList[coin]);
       this.props.getCoinPrice(cryptoList[coin]);
-    //   this.getWonByDollarFunc();
     }
   }
 
-  // renderCrypto() {
-  //   return (
-  //     <Crypto />
-  //   )
-  // }
-
-
   render() {
-    let { marketCap, bitcoinPercentage } = this.props.state.market;
-
+    let { marketCap, bitcoinPercentage, wonByDollarPrice, coins } = this.props.state.market;
     return (
-      <View>
-        <Text>
-          -- Cryptocurrencies Global Info --
-        </Text>
-        <Text>
-          Total Market Cap : {marketCap}
-        </Text>
-        <Text>
-          Bitcoin % of Total Market Cap : {bitcoinPercentage}
-        </Text>
+      <View style={styles.container}>
+        <View>
+          <Text>
+            -- Cryptocurrencies Global Info --
+          </Text>
+          <Text>
+            Total Market Cap : {marketCap}
+          </Text>
+          <Text>
+            Bitcoin % of Total Market Cap : {bitcoinPercentage}
+          </Text>
+          <Text>
+            Won / Dollar ratio : {wonByDollarPrice}
+          </Text>
+
+        </View>
+
+        <TextInput
+         value={this.state.searchValue}
+         onChange={(searchValue) => this.setState({searchValue})}
+         placeholder='Search'
+        />
 
         <ScrollView>
-          <TextInput
-           value={this.state.searchValue}
-           onChange={(searchValue) => this.setState({searchValue})}
-           placeholder='Search'
-          />
-
-          <Crypto coins={this.props.state.market.coins}/>
+          {
+            coins && Object.keys(coins).map((coin) => {
+              return (
+                <Crypto key={coin} coin={coins[coin]} name={coin}/>
+              )})
+          }
         </ScrollView>
 
 
@@ -143,6 +149,14 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   getMarketCap,
-  getGlobalInfo,
+  getBTCPercentile,
+  initCoins,
   getCoinPrice,
+  getWonByDollar
 })(Market)
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1
+  }
+});

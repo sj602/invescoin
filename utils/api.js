@@ -75,7 +75,7 @@ export const marketBittrex = (coin) => {
     }
   )
   .then(res => res.json())
-  .then(data => data.result[0].Last)
+  .then(data => data.result[0].Last.toFixed(2))
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -92,7 +92,7 @@ export const getMarketCap = (coin) => {
   .catch(e => console.log('Error occurred : ', e))
 }
 
-export const getGlobalInfo = () => {
+export const getBTCPercentile = () => {
   return fetch(
     `${Coinmarketcap_URL}global/`,
     {

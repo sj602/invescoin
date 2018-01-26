@@ -41,16 +41,17 @@ export const Stacks = StackNavigator({
 }, {
     navigationOptions: ({navigation}) => ({
       headerLeft:
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate(handleDrawer[0])
+                      handleDrawer.push(handleDrawer.shift())
+                    }}
+                  >
                     <Icon
                       style={{margin:10}}
                       name='bars'
                       size={20}
                       color='white'
-                      onPress={() => {
-                        navigation.navigate(handleDrawer[0])
-                        handleDrawer.push(handleDrawer.shift())
-                      }}
                     />
                   </TouchableOpacity>,
       headerStyle: {
