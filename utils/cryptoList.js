@@ -72,11 +72,15 @@ export const cryptoList = [
     img: require('../assets/images/xem.png'),
   },
   {
-    name: 'IOTA',
-    symbolBig: 'MIOTA',
-    symbolSmall: 'miota',
-    img: require('../assets/images/miota.png'),
+    name: 'Monero',
+    symbolBig: 'XMR',
+    symbolSmall: 'xmr',
+    img: require('../assets/images/xmr.png'),
   },
-
-
+  {
+    name: 'Dash',
+    symbolBig: 'DASH',
+    symbolSmall: 'dash',
+    img: require('../assets/images/dash.png'),
+  },
 ];

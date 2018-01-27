@@ -1,9 +1,8 @@
-const Korbit_URL = `https://api.korbit.co.kr/v1/ticker`;
-const Bithumb_URL = `https://api.bithumb.com/public/ticker`;
-const Coinone_URL = `https://api.coinone.co.kr/ticker`;
-const Upbit_URL = `https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/1?code=CRIX.UPBIT.KRW-`;
 const Coinmarketcap_URL = `https://api.coinmarketcap.com/v1/`;
+const Bithumb_URL = `https://api.bithumb.com/public/ticker`;
+const Upbit_URL = `https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/1?code=CRIX.UPBIT.KRW-`;
 const Bittrex_URL = `https://bittrex.com/api/v1.1/public/getmarketsummary`;
+const Bitfinex_URL = `https://api.cryptowat.ch/markets/bitfinex`;
 const Dollar_URL = `http://api.fixer.io/latest?base=USD`;
 const Balance_URL = `https://blockchain.info/ko/rawaddr/`;
 const Transactions_URL = `https://api.blockchain.info/stats`;
@@ -11,20 +10,8 @@ const Transactions_URL = `https://api.blockchain.info/stats`;
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'Authentication': 'c23R30cm2jOOExyAsG6pf5Xxy4QwpndxaIMRs6aOZxIQoUlMVOv1tCQZL3jZz'
 };
 
-export const marketKorbit = () => {
-  return fetch(
-    `${Korbit_URL}/`,
-    {
-      method: 'GET',
-      headers,
-    }
-  )
-  .then(res => res.json)
-  .catch(e => console.log('Error occurred : ', e))
-}
 
 export const marketBithumb = (coin) => {
   return fetch(
@@ -36,20 +23,6 @@ export const marketBithumb = (coin) => {
   )
   .then(res => res.json())
   .then(data => data['data']['closing_price'])
-  .catch(e => console.log('Error occurred : ', e))
-}
-
-export const marketCoinone = () => {
-  return fetch(
-    `${Coinone_URL}/btc`,
-    {
-      method: 'GET',
-      headers,
-    }
-  )
-  .then(res => res.json())
-  // .then(data => data.replace(/\s/g, ""))
-  // .then(data => JSON.parse(data))
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -79,16 +52,29 @@ export const marketBittrex = (coin) => {
   .catch(e => console.log('Error occurred : ', e))
 }
 
-export const getMarketCap = (coin) => {
+export const marketBitfinex = (coin) => {
   return fetch(
-    `${Coinmarketcap_URL}ticker/${coin}/?convert=KRW`,
+    `${Bitfinex_URL}/${coin}usd/price`,
     {
       method: 'GET',
       headers,
     }
   )
   .then(res => res.json())
-  .then(data => data[0]['market_cap_krw'])
+  .then(data => data.result['price'])
+  .catch(e => console.log('Error occurred : ', e))
+}
+
+export const getMarketCap = (coin) => {
+  return fetch(
+    `${Coinmarketcap_URL}ticker/${coin}`,
+    {
+      method: 'GET',
+      headers,
+    }
+  )
+  .then(res => res.json())
+  .then(data => data[0]['market_cap_usd'])
   .catch(e => console.log('Error occurred : ', e))
 }
 

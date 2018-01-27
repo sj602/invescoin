@@ -15,12 +15,14 @@ export default class Crypto extends Component {
             source={coin.img}
             style={{width: 30, height: 30}}
           />
-          <Text>
-            {name}
-          </Text>
-          <Text>
-            {coin.symbolBig}
-          </Text>
+          <View style={styles.symbolView}>
+            <Text>
+              {name}
+            </Text>
+            <Text>
+              {coin.symbolBig}
+            </Text>
+          </View>
         </View>
         <View style={styles.coinPrice}>
           <Text>
@@ -32,6 +34,12 @@ export default class Crypto extends Component {
           <Text>
             Bittrex: {coin.bittrexPrice}
           </Text>
+          <Text>
+            Bitfinex: {coin.bitfinexPrice}
+          </Text>
+          <Text>
+            김치프리미엄: {coin.kimchiPremium && coin.kimchiPremium.toFixed(2)} ({coin.kpPercent && coin.kpPercent.toFixed(2)}%)
+          </Text>
         </View>
       </View>
     )
@@ -41,17 +49,22 @@ export default class Crypto extends Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    margin: 5
   },
   coinImage: {
     flex:1,
     flexDirection: 'row',
     // justifyContent: 'center',
-    // alignItems: 'center',
-    marginRight: 10
+    alignItems: 'center',
+  },
+  symbolView: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginLeft: 3
   },
   coinPrice: {
-    flex:3,
+    flex:1,
     flexDirection: 'column',
     // justifyContent: 'center',
     // alignItems: 'center'

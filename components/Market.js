@@ -11,6 +11,7 @@ import {
   initCoins,
   getCoinPrice,
   getWonByDollar,
+  getKimchiPremium
 } from '../actions/index';
 import * as api from '../utils/api';
 import { cryptoList } from '../utils/cryptoList';
@@ -41,11 +42,6 @@ class Market extends Component {
   //   });
   // }
 
-  // getKorbitFunc() {
-  //   return api.marketKorbit(data => {
-  //     this.setState({marketKorbitPrice: '￦ ' + data});
-  //   });
-  // }
 
   // getCoinoneFunc() {
   //   return api.marketCoinone().then(data => {
@@ -97,6 +93,7 @@ class Market extends Component {
     for(let coin in cryptoList) {
       this.props.initCoins(cryptoList[coin]);
       this.props.getCoinPrice(cryptoList[coin]);
+      // this.props.getKimchiPremium(cryptoList[coin])
     }
   }
 
@@ -109,21 +106,20 @@ class Market extends Component {
             -- Cryptocurrencies Global Info --
           </Text>
           <Text>
-            Total Market Cap : {marketCap}
+            Total Market Cap(시가총액) : $ {marketCap}
           </Text>
           <Text>
-            Bitcoin % of Total Market Cap : {bitcoinPercentage}
+            Bitcoin Dominance(비트코인 점유율) : {bitcoinPercentage} %
           </Text>
           <Text>
-            Won / Dollar ratio : {wonByDollarPrice}
+            Won / Dollar ratio(원/달러 환율) : {wonByDollarPrice}
           </Text>
-
         </View>
 
         <TextInput
          value={this.state.searchValue}
          onChange={(searchValue) => this.setState({searchValue})}
-         placeholder='Search'
+         placeholder='Search a coin (e.g Bitcoin or BTC)'
         />
 
         <ScrollView>
@@ -152,7 +148,8 @@ export default connect(mapStateToProps, {
   getBTCPercentile,
   initCoins,
   getCoinPrice,
-  getWonByDollar
+  getWonByDollar,
+  getKimchiPremium
 })(Market)
 
 const styles = StyleSheet.create({

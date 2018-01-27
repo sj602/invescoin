@@ -6,7 +6,6 @@ import Bubble from '../components/Bubble';
 import Tweets from '../components/Tweets';
 import Market from '../components/Market';
 import Calendar from '../components/Calendar';
-import Balance from '../components/Balance';
 import Donate from '../components/Donate';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -17,17 +16,14 @@ export const Drawer = DrawerNavigator({
   Bubble: {
     screen: Bubble
   },
-  Tweets: {
-    screen: Tweets
-  },
   Market: {
     screen: Market
   },
+  Tweets: {
+    screen: Tweets
+  },
   Calendar: {
     screen: Calendar
-  },
-  Balance: {
-    screen: Balance
   },
   Donate: {
     screen: Donate

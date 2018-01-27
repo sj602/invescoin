@@ -4,12 +4,16 @@ import {
   INIT_COINS,
   GET_COIN_PRICE,
   GET_WON_BY_DOLLAR,
+  GET_KIMCHI_PREMIUM,
 } from './types.js';
 import * as api from '../utils/api';
 
 export const getMarketCap = (coin) => dispatch => {
   return api.getMarketCap(coin)
-    .then(data => dispatch({type: GET_MARKET_CAP, data}))
+    .then(data => {
+      data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"); // add a comma every 3 letters
+      return dispatch({type: GET_MARKET_CAP, data})
+    })
 }
 
 export const getBTCPercentile = () => dispatch => {
@@ -38,6 +42,14 @@ export const getCoinPrice = (coin) => dispatch => {
       api.marketBittrex(coin.symbolSmall)
       .then(data => dispatch({type: GET_COIN_PRICE, bittrexPrice: data, coin}))
     })
+    .then(() => {
+      api.marketBitfinex(coin.symbolSmall)
+      .then(data => dispatch({type: GET_COIN_PRICE, bitfinexPrice: data, coin}))
+    })
+}
+
+export const getKimchiPremium = (coin) => dispatch => {
+  return dispatch({type: GET_KIMCHI_PREMIUM, coin})
 }
 
 export const getWonByDollar = () => dispatch => {
