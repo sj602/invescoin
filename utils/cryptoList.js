@@ -6,16 +6,10 @@ export const cryptoList = [
     img: require('../assets/images/btc.png'),
   },
   {
-    name: 'Etherium',
+    name: 'Ethereum',
     symbolBig: 'ETH',
     symbolSmall: 'eth',
     img: require('../assets/images/eth.png'),
-  },
-  {
-    name: 'Litecoin',
-    symbolBig: 'LTC',
-    symbolSmall: 'ltc',
-    img: require('../assets/images/ltc.png'),
   },
   {
     name: 'Ripple',
@@ -24,10 +18,16 @@ export const cryptoList = [
     img: require('../assets/images/xrp.png'),
   },
   {
-    name: 'Quantum',
-    symbolBig: 'QTUM',
-    symbolSmall: 'qtum',
-    img: require('../assets/images/qtum.png'),
+    name: 'Bitcoin Cash',
+    symbolBig: 'BCH',
+    symbolSmall: 'bch',
+    img: require('../assets/images/bch.png'),
+  },
+  {
+    name: 'Cardano',
+    symbolBig: 'ADA',
+    symbolSmall: 'ada',
+    img: require('../assets/images/ada.png'),
   },
   {
     name: 'Neo',
@@ -36,28 +36,16 @@ export const cryptoList = [
     img: require('../assets/images/neo.png'),
   },
   {
+    name: 'Litecoin',
+    symbolBig: 'LTC',
+    symbolSmall: 'ltc',
+    img: require('../assets/images/ltc.png'),
+  },
+  {
     name: 'Stellar',
     symbolBig: 'XLM',
     symbolSmall: 'xlm',
     img: require('../assets/images/xlm.png'),
-  },
-  {
-    name: 'Bitcoin Cash',
-    symbolBig: 'BCH',
-    symbolSmall: 'bch',
-    img: require('../assets/images/bch.png'),
-  },
-  {
-    name: 'Etherium Classic',
-    symbolBig: 'ETC',
-    symbolSmall: 'etc',
-    img: require('../assets/images/etc.png'),
-  },
-  {
-    name: 'Cardano',
-    symbolBig: 'ADA',
-    symbolSmall: 'ada',
-    img: require('../assets/images/ada.png'),
   },
   {
     name: 'EOS',
@@ -72,10 +60,10 @@ export const cryptoList = [
     img: require('../assets/images/xem.png'),
   },
   {
-    name: 'Monero',
-    symbolBig: 'XMR',
-    symbolSmall: 'xmr',
-    img: require('../assets/images/xmr.png'),
+    name: 'IOTA',
+    symbolBig: 'IOT',
+    symbolSmall: 'iot',
+    img: require('../assets/images/miota.png'),
   },
   {
     name: 'Dash',
@@ -83,4 +71,47 @@ export const cryptoList = [
     symbolSmall: 'dash',
     img: require('../assets/images/dash.png'),
   },
+  {
+    name: 'Monero',
+    symbolBig: 'XMR',
+    symbolSmall: 'xmr',
+    img: require('../assets/images/xmr.png'),
+  },
+  {
+    name: 'Tron',
+    symbolBig: 'TRON',
+    symbolSmall: 'tron',
+    img: require('../assets/images/xmr.png'),
+  },
+  {
+    name: 'Icon',
+    symbolBig: 'ICX',
+    symbolSmall: 'icx',
+    img: require('../assets/images/icx.png'),
+  },
+  {
+    name: 'Quantum',
+    symbolBig: 'QTUM',
+    symbolSmall: 'qtum',
+    img: require('../assets/images/qtum.png'),
+  },
+  {
+    name: 'Etherium Classic',
+    symbolBig: 'ETC',
+    symbolSmall: 'etc',
+    img: require('../assets/images/etc.png'),
+  },
+  {
+    name: 'Bitcoin Gold',
+    symbolBig: 'BTG',
+    symbolSmall: 'btg',
+    img: require('../assets/images/btg.png'),
+  },
+  {
+    name: 'Lisk',
+    symbolBig: 'LSK',
+    symbolSmall: 'lsk',
+    img: require('../assets/images/lsk.png'),
+  },
+
 ];

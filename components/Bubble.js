@@ -1,44 +1,63 @@
 import React, { Component } from 'react';
 import {
   View, Text, TouchableOpacity,
-  Image, Picker, Linking
+  Image, Picker, Linking, WebView,
+  TextInput, Button
 } from 'react-native';
+import { connect } from 'react-redux';
+import {
+  getMarketCap,
+  getTransactions,
+  getInflation
+} from '../actions/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Dimensions from 'Dimensions';
 import * as api from '../utils/api';
+import { addComma3letters } from '../utils/helpers';
+import { VictoryBar } from 'victory-native';
 
-export default class Bubble extends Component {
+class Bubble extends Component {
   state = {
-    marketCap: '',
-    transactionsVolume: '',
+    loading: true,
+    keyword: '',
+    result: '',
     googleShow: false,
     NVTShow: false,
     priceRelationShow: false,
-    priceRelationUri: 'https://www.sifrdata.com/wp-content/uploads/CommunityGraph90.jpeg?t=1515421610',
+    historicBubbleShow: false,
   }
 
-  getMarketCapFunc(coin, currency) {
-    return api.getMarketCap(coin, currency)
-      .then(data => data[0]['market_cap_usd'])
-      .then(data => {
-        // data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-        this.setState({marketCap : data});
+  componentDidMount() {
+    this.props.getMarketCap('bitcoin');
+    this.props.getTransactions();
+    this.props.getInflation(8000000000000, 2000);
+  }
+
+  handleKeyword(e) {
+    this.setState({
+      keyword: e.target.value
     });
   }
 
-  getTransactionsVolume(coin) {
-    return api.getTransactions(coin).then(data => {
-      this.setState({transactionsVolume: data});
-    })
-  }
-
   renderGoogle() {
-    // const googleTrends = require('google-trends-api')
     if(this.state.googleShow) {
       return (
         <View>
+          <View>
+            <TextInput
+             value={this.state.keyword}
+             onChange={(e) => this.handleKeyword(e)}
+             placeholder='keyword'
+            />
+            <Button
+              onPress={() => this.setState({
+                result: api.getGoogleTrendsData(this.state.keyword)
+              })}
+              title='Find'
+            />
+          </View>
           <Text>
-            Google Trends Result for : btc usd
+            Google Trends Result for {this.state.keyword}: {this.state.result}
           </Text>
         </View>
       )
@@ -47,11 +66,7 @@ export default class Bubble extends Component {
 
   renderNVC() {
     if(this.state.NVTShow) {
-      this.getMarketCapFunc('bitcoin', 'USD');
-      this.getTransactionsVolume('bitcoin');
-      let { marketCap, transactionsVolume } = this.state;
-      // marketCap = marketCap.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-      // transactionsVolume = transactionsVolume.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      let { marketCap, transactionsVolume } = this.props.state.bubble.NVT_Ratio;
       let ratio = (marketCap / transactionsVolume).toFixed(2);
 
 
@@ -69,10 +84,10 @@ export default class Bubble extends Component {
             </Text>
           </Text>
           <Text>
-            Network Value : $ {marketCap}
+            Network Value : $ {addComma3letters(marketCap)}
           </Text>
           <Text>
-            Transactions Volume : $ {transactionsVolume}
+            Transactions Volume : $ {addComma3letters(transactionsVolume)}
           </Text>
           <Text>
             NVT Ratio : { ratio }
@@ -112,6 +127,24 @@ export default class Bubble extends Component {
           <Text>
             BTC = Bitcoin, ETH = Ethereum, BCH = Bitcoin Cash, XRP = Ripple, LTC = Litecoin, DASH = Dash, XMR = Monero, XEM = NEM, ETC = Ethereum Classic, XLM = Stellar Lumens, ZEC = Zcash, NXT = Nxt, REP = Augur, LSK = Lisk, FCT = Factom, GLD = SPDR Gold Shares.
           </Text>
+        </View>
+      )
+    }
+  }
+
+  renderHistoricBubble() {
+    if(this.state.historicBubbleShow){
+      return (
+        <View>
+          <Text>
+            역사적인 경제 버블 크기 비교입니다. 현재의 인플레이션율로 계산되었습니다.
+          </Text>
+          <Text>
+            닷컴버블
+            연도 : 2000
+            크기 : $ {this.props.state.bubble.historicBubble.adjustedValue}
+          </Text>
+          <VictoryBar />
         </View>
       )
     }
@@ -165,10 +198,38 @@ export default class Bubble extends Component {
           </Icon.Button>
         </TouchableOpacity>
         { this.renderPriceRelation() }
+
+        <TouchableOpacity>
+          <Icon.Button
+            name="bitcoin"
+            backgroundColor="#3b5998"
+            onPress={() => {
+              this.setState(state => ({
+                historicBubbleShow: !state.historicBubbleShow
+              }))
+            }}
+          >
+            Comparing the size of historic bubbles
+          </Icon.Button>
+        </TouchableOpacity>
+        { this.renderHistoricBubble() }
+
       </View>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps, {
+  getMarketCap,
+  getTransactions,
+  getInflation
+})(Bubble)
 
 
 // const styles = StyleSheet.create({

@@ -4,9 +4,9 @@ const Upbit_URL = `https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/1
 const Bittrex_URL = `https://bittrex.com/api/v1.1/public/getmarketsummary`;
 const Bitfinex_URL = `https://api.cryptowat.ch/markets/bitfinex`;
 const Dollar_URL = `http://api.fixer.io/latest?base=USD`;
-const Balance_URL = `https://blockchain.info/ko/rawaddr/`;
 const Transactions_URL = `https://api.blockchain.info/stats`;
-
+const Inflation_URL = `https://inflation-api.herokuapp.com/api/?`;
+const GoogleTrends_URL = `http://localhost:3000/interestOverTime/`;
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
@@ -104,23 +104,9 @@ export const getWonByDollar = () => {
 }
 
 
-///////////////////////////////// Checking Balnce /////////////////////////
-
-export const getBalance = (address) => {
-  return fetch(
-    `${Balance_URL}/${address}`,
-    {
-      method: 'GET',
-      headers,
-    }
-  )
-  .then(res => res.json())
-  .then(data => data['final_balance'])
-}
-
 ///////////////////////////////// Bubble APIs ///////////////////////////////
 
-export const getTransactions = (coin) => {
+export const getTransactions = () => {
   return fetch(
     `${Transactions_URL}`,
     {
@@ -129,5 +115,29 @@ export const getTransactions = (coin) => {
     }
   )
   .then(res => res.json())
-  .then(data => data['estimated_transaction_volume_usd'])
+  .then(data => data['estimated_transaction_volume_usd'].toFixed(2))
+}
+
+export const getInflation = (value, year) => {
+  return fetch(
+    `${Inflation_URL}value=${value}&year=${year}`,
+    {
+      method: 'GET',
+      headers,
+    }
+  )
+  .then(res => res.json())
+  .then(data => data.response.adjustedValue)
+}
+
+export const getGoogleTrendsData = (keyword) => {
+  return fetch(
+    `${GoogleTrends_URL}${keyword}`,
+    {
+      method: 'GET',
+      headers,
+    }
+  )
+  .then(res => res.json())
+  .then(data => data)
 }

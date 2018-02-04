@@ -1,4 +1,7 @@
 {
+  "name": "invescoin",
+  "displayName": "Invescoin",
+  "icon": "icon.png",
   "expo": {
     "sdkVersion": "23.0.0",
     "android": {

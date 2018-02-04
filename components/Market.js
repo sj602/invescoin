@@ -1,83 +1,36 @@
 import React, { Component } from 'react';
 import {
   View, Text, TouchableOpacity,
-  ScrollView, TextInput, StyleSheet
+  ScrollView, TextInput, StyleSheet,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import Crypto from './Crypto';
+import { Loader } from './Loader';
 import {
   getMarketCap,
   getBTCPercentile,
   initCoins,
   getCoinPrice,
   getWonByDollar,
-  getKimchiPremium
 } from '../actions/index';
 import * as api from '../utils/api';
 import { cryptoList } from '../utils/cryptoList';
+import { addComma3letters } from '../utils/helpers';
 
 class Market extends Component {
-  state = {
-    searchValue: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchValue: '',
+      loading: false,
+      currentlyDisplayed: this.props.state.market.coins
+    }
   }
 
-  //
-  // getGlobalInfoFunc() {
-  //   return api.getGlobalInfo().then(data => {
-  //     data.total_market_cap_usd = data.total_market_cap_usd.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //     data.bitcoin_percentage_of_market_cap = data.bitcoin_percentage_of_market_cap.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //     this.setState({
-  //       totalMarketCap : '$ ' + data.total_market_cap_usd,
-  //       bitcoinPercentage: data.bitcoin_percentage_of_market_cap + '%'
-  //     });
-  //   });
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log('completed');
   // }
-  //
-  // getMarketCapFunc(coin, currency) {
-  //   return api.getMarketCap(coin, currency)
-  //     .then(data => data[0]['market_cap_krw'])
-  //     .then(data => {
-  //       data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //       this.setState({marketCapBTC : '￦ ' + data});
-  //   });
-  // }
-
-
-  // getCoinoneFunc() {
-  //   return api.marketCoinone().then(data => {
-  //     data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //     this.setState({marketCoinonePrice : '￦ ' + data});
-  //   });
-  // }
-
-  // getBittrexFunc() {
-  //   return api.marketBittrex().then(data => {
-  //     data = data.toFixed(0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //     this.setState({marketBittrexPrice : '$ ' + data});
-  //   })
-  // }
-  //
-  // getWonByDollarFunc() {
-  //   return api.getWonByDollar().then(data => {
-  //     data = data.toFixed(0);
-  //     let price = this.state.marketBittrexPrice.replace(/[\$ ,]/g, "")
-  //     data = Number(data) * Number(price);
-  //
-  //     // Calculate Kimchi Premium
-  //     let upbitPrice = Number(this.state.marketUpbitPrice.replace(/[\￦ ,]/g, ""));
-  //     let kimchiPremium = upbitPrice - data;
-  //     let kpPercent = '(' + (kimchiPremium / data * 100).toFixed(2).toString() + '%)';
-  //     kimchiPremium = kimchiPremium.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //     this.setState({ kimchiPremium: '￦ ' + kimchiPremium,
-  //                     kpPercent
-  //                   });
-  //
-  //     data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  //     this.setState({ dollarWonPrice: '￦ ' + data });
-  //   })
-  // }
-  //
-  //
 
   componentDidMount() {
     // update info every 10 secs
@@ -93,14 +46,29 @@ class Market extends Component {
     for(let coin in cryptoList) {
       this.props.initCoins(cryptoList[coin]);
       this.props.getCoinPrice(cryptoList[coin]);
-      // this.props.getKimchiPremium(cryptoList[coin])
     }
   }
 
+  handleSearch(e) {
+    let { coins } = this.props.state.market;
+    let newlyDisplayed = coins.filter((coin) => coin.symbolBig.includes('BTC'))
+    this.setState({
+      searchValue: e.target.value,
+      currentlyDisplayed: newlyDisplayed
+    })
+  }
+
   render() {
+
     let { marketCap, bitcoinPercentage, wonByDollarPrice, coins } = this.props.state.market;
+    // let coins = this.state.currentlyDisplayed;
+    if(marketCap) marketCap = addComma3letters(marketCap);
+
     return (
       <View style={styles.container}>
+        <Loader
+          loading={this.state.loading}
+        />
         <View>
           <Text>
             -- Cryptocurrencies Global Info --
@@ -118,10 +86,10 @@ class Market extends Component {
 
         <TextInput
          value={this.state.searchValue}
-         onChange={(searchValue) => this.setState({searchValue})}
+         onChange={(e) => this.handleSearch(e)}
          placeholder='Search a coin (e.g Bitcoin or BTC)'
         />
-
+        <Text>개발중 : 현재 코인 시총 TOP20 만 제공됩니다.</Text>
         <ScrollView>
           {
             coins && Object.keys(coins).map((coin) => {
@@ -149,7 +117,6 @@ export default connect(mapStateToProps, {
   initCoins,
   getCoinPrice,
   getWonByDollar,
-  getKimchiPremium
 })(Market)
 
 const styles = StyleSheet.create({
