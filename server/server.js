@@ -8,8 +8,13 @@ app.get('/interestOverTime/:keyword', (req, res) => {
   return googleTrends.interestOverTime({
     keyword: req.params.keyword
   })
-    .then(data => data)
-    .catch(err => console.log(err))
+    .then(data => {
+      res.json(JSON.parse(data));
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    })
   // console.log(req.params.keyword)
 });
 app.get('/', (req, res) => {

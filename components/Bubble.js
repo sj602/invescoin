@@ -14,7 +14,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Dimensions from 'Dimensions';
 import * as api from '../utils/api';
 import { addComma3letters } from '../utils/helpers';
-import { VictoryBar } from 'victory-native';
 
 class Bubble extends Component {
   state = {
@@ -50,9 +49,11 @@ class Bubble extends Component {
              placeholder='keyword'
             />
             <Button
-              onPress={() => this.setState({
-                result: api.getGoogleTrendsData(this.state.keyword)
-              })}
+              onPress={() => {
+                console.log(api.getGoogleTrendsData(this.state.keyword))
+              }}
+                // this.setState({
+                // result: api.getGoogleTrendsData(this.state.keyword)
               title='Find'
             />
           </View>
@@ -142,9 +143,13 @@ class Bubble extends Component {
           <Text>
             닷컴버블
             연도 : 2000
-            크기 : $ {this.props.state.bubble.historicBubble.adjustedValue}
+            크기 : $ {addComma3letters(this.props.state.bubble.historicBubble.adjustedValue)}
           </Text>
-          <VictoryBar />
+          <Text>
+            암호화폐
+            연도 : 2009 ~
+            크기 : $ {addComma3letters(this.props.state.bubble.NVT_Ratio.marketCap)}
+          </Text>
         </View>
       )
     }

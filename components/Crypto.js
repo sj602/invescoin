@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   symbolView: {
+    flex:1,
     flexDirection: 'column',
     justifyContent: 'center',
     marginLeft: 3

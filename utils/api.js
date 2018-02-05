@@ -138,6 +138,5 @@ export const getGoogleTrendsData = (keyword) => {
       headers,
     }
   )
-  .then(res => res.json())
-  .then(data => data)
+  .then(res => res)
 }
