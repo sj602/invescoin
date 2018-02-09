@@ -1,4 +1,5 @@
 import {
+  GET_GLOBAL_MARKET_CAP,
   GET_MARKET_CAP,
   GET_BTC_PERCENTILE,
   GET_COIN_PRICE,
@@ -8,6 +9,11 @@ import {
 
 export default function marketReducer(state = {}, action) {
   switch (action.type) {
+    case GET_GLOBAL_MARKET_CAP:
+      return {
+        ...state,
+        globalMarketCap: action.data
+      }
     case GET_MARKET_CAP:
       return {
         ...state,

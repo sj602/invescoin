@@ -65,6 +65,19 @@ export const marketBitfinex = (coin) => {
   .catch(e => console.log('Error occurred : ', e))
 }
 
+export const getGlobalMarketCap = () => {
+  return fetch(
+    `${Coinmarketcap_URL}global/`,
+    {
+      method: 'GET',
+      headers,
+    }
+  )
+  .then(res => res.json())
+  .then(data => data['total_market_cap_usd'])
+  .catch(e => console.log('Error occurred : ', e))
+}
+
 export const getMarketCap = (coin) => {
   return fetch(
     `${Coinmarketcap_URL}ticker/${coin}`,
@@ -138,5 +151,29 @@ export const getGoogleTrendsData = (keyword) => {
       headers,
     }
   )
-  .then(res => res)
+  .then(res => console.log(res))
+  // .then(data => console.log('data', data))
+}
+
+///////////////////////////// Communites APIs ///////////////////////
+export async function loadReddit() {
+  const searchUrl = `https://www.reddit.com/r/Bitcoin/`;
+  const response = await fetch(searchUrl);
+
+  const htmlString = await response.text();
+  const cheerio = require('cheerio-without-node-native');
+  const $ = cheerio.load(htmlString);
+  return $("div[data-rank]")
+    .map((e) => {
+      console.log(e)
+      return ({
+      timestamp: $(e).attr('data-timestamp'),
+      rank: $(e).attr('data-rank'),
+      score: $(e).attr('data-score'),
+      comments: $(e).attr('data-comments-count'),
+      title: $("a[data-event-action='title']", e).text(),
+      data: $(e).attr('data-url'),
+      thumbnail: $("a[data-event-action='thumbnail'] img", e).attr('src')
+    })
+  });
 }

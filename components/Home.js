@@ -10,14 +10,13 @@ export default class Home extends Component {
           <View style={styles.menuImage}>
             <Icon
               name='check-square-o'
-              size={30}
+              size={50}
               color='black'
             />
             <Text>Bubble</Text>
           </View>
           <View style={styles.menuText}>
             <Text>
-              Get notified if Bitcoin is in a BUBBLE in a simple way.
               비트코인 가격. 거품인 것 같나요? 간단한 방법으로 알아보세요!
             </Text>
           </View>
@@ -26,14 +25,13 @@ export default class Home extends Component {
           <View style={styles.menuImage}>
             <Icon
               name='money'
-              size={30}
+              size={50}
               color='green'
             />
             <Text>Market</Text>
           </View>
           <View style={styles.menuText}>
             <Text>
-              Compare each famous Market for various cryptocurrencies.
               국내/해외 거래소에서 여러가지 코인 시세 정보를 알아보세요!
             </Text>
           </View>
@@ -42,14 +40,13 @@ export default class Home extends Component {
           <View style={styles.menuImage}>
             <Icon
               name='twitter'
-              size={30}
+              size={50}
               color='#00aced'
             />
             <Text>Tweets</Text>
           </View>
           <View style={styles.menuText}>
             <Text>
-              Keep trendy reading tweets from famous Cryptocurrency twitterians
               트윗을 보고 급변하는 코인 소식들을 받아보세요!
             </Text>
           </View>
@@ -58,14 +55,13 @@ export default class Home extends Component {
           <View style={styles.menuImage}>
             <Icon
               name='calendar'
-              size={30}
+              size={50}
               color='#999999'
             />
             <Text>Calendar</Text>
           </View>
           <View style={styles.menuText}>
             <Text>
-              Check Cryptocurrency Events!! It is IMPORTANT to know them
               달력으로 ICO, 코인 호재 소식을 체크해보세요!
             </Text>
           </View>
@@ -74,14 +70,13 @@ export default class Home extends Component {
           <View style={styles.menuImage}>
             <Icon
               name='smile-o'
-              size={30}
+              size={50}
               color='#ffc300'
             />
             <Text>Donate</Text>
           </View>
           <View style={styles.menuText}>
             <Text>
-              Donate here :)
               개발자에게 따뜻한 온정을 베풀어주세요.
             </Text>
           </View>
@@ -106,7 +101,6 @@ const styles = StyleSheet.create({
     borderWidth: 5
   },
   menuImage: {
-    borderWidth: 2,
     flex:1,
     alignItems: 'center',
     justifyContent: 'center'

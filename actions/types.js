@@ -1,4 +1,5 @@
 // ----------------------MARKET ACTION TYPES-----------------------------
+export const GET_GLOBAL_MARKET_CAP = 'GET_GLOBAL_MARKET_CAP';
 export const GET_MARKET_CAP = 'GET_MARKET_CAP';
 export const GET_BTC_PERCENTILE = 'GET_BTC_PERCENTILE';
 export const INIT_COINS = 'INIT_COINS';
@@ -7,3 +8,5 @@ export const GET_WON_BY_DOLLAR = 'GET_WON_BY_DOLLAR';
 // ---------------------BUBBLE ACTIONS TYPES---------------------------------
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
 export const GET_INFLATION = 'GET_INFLATION';
+// ---------------------COMMUNITIES ACTIONS TYPES---------------------------------
+export const GET_REDDIT_DATA = 'GET_REDDIT_DATA';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   View, Text, TouchableOpacity,
   Image, Picker, Linking, WebView,
-  TextInput, Button
+  TextInput, Button, StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -32,10 +32,8 @@ class Bubble extends Component {
     this.props.getInflation(8000000000000, 2000);
   }
 
-  handleKeyword(e) {
-    this.setState({
-      keyword: e.target.value
-    });
+  handleText(text) {
+    this.setState({keyword: text})
   }
 
   renderGoogle() {
@@ -45,12 +43,13 @@ class Bubble extends Component {
           <View>
             <TextInput
              value={this.state.keyword}
-             onChange={(e) => this.handleKeyword(e)}
+             onChangeText={(text) => this.handleText(text)}
              placeholder='keyword'
             />
             <Button
               onPress={() => {
-                console.log(api.getGoogleTrendsData(this.state.keyword))
+                console.log('keyword: ', this.state.keyword)
+                return api.getGoogleTrendsData(this.state.keyword)
               }}
                 // this.setState({
                 // result: api.getGoogleTrendsData(this.state.keyword)
@@ -69,33 +68,41 @@ class Bubble extends Component {
     if(this.state.NVTShow) {
       let { marketCap, transactionsVolume } = this.props.state.bubble.NVT_Ratio;
       let ratio = (marketCap / transactionsVolume).toFixed(2);
-
+      let ratioText = (ratio < 50 ? '현재 저평가 되었습니다.' : ratio > 100 ? '현재 고평가 되었습니다.' : '현재 적정 수준입니다.');
 
       return (
         <View>
-          <Text>
-            NVT Ratio Chart
-            Before using NVT Ratio Chart, Go read the explanation of NVT Ratio
-            reference:
+          <View style={{justifyContent:'center', alignItems: 'center'}}>
+            <Text>
+              Network Value : $ {addComma3letters(marketCap)}
+            </Text>
+            <Text>
+              Transactions Volume : $ {addComma3letters(transactionsVolume)}
+            </Text>
+            <Text>
+              NVT Ratio : { ratio }
+            </Text>
+            <Text>
+              {ratioText}
+            </Text>
+          </View>
+          <View>
+            <Text>
+              NVT Ratio는 주식시장에서의 PER와 같은 모델로 실제 비트코인을 이용한 사용자들간의 교환행위 대비 비트코인의 가격에 대한 수치입니다.
+            </Text>
+            <Text>
+              NVT Ratio가 50과 100 사이에 있으면 적정, 50 이하는 저평가, 100 이상은 고평가일 확률이 높습니다.
+            </Text>
+            <Text>
+              NVT Ratio는 실시간 지표이며 보다 정확한 분석을 위한 Moving Average 지표는 구현 중 입니다.
+            </Text>
             <Text
               style={{color: 'blue'}}
               onPress={() => Linking.openURL('http://woobull.com/introducing-nvt-ratio-bitcoins-pe-ratio-use-it-to-detect-bubbles')}
             >
               http://woobull.com/introducing-nvt-ratio-bitcoins-pe-ratio-use-it-to-detect-bubbles/
             </Text>
-          </Text>
-          <Text>
-            Network Value : $ {addComma3letters(marketCap)}
-          </Text>
-          <Text>
-            Transactions Volume : $ {addComma3letters(transactionsVolume)}
-          </Text>
-          <Text>
-            NVT Ratio : { ratio }
-          </Text>
-          <Text>
-            Caution: This is just a simple metric so dont overestimate it.
-          </Text>
+          </View>
         </View>
       )
     }
@@ -237,12 +244,14 @@ export default connect(mapStateToProps, {
 })(Bubble)
 
 
-// const styles = StyleSheet.create({
-//   ratioRed: {
-//     color: 'red'
-//   },
-//   ratioGreen: {
-//     color: 'green'
-//   }
-// });
-//
+const styles = StyleSheet.create({
+  ratioRed: {
+    color: 'red'
+  },
+  ratioYellow: {
+    color: 'yellow'
+  },
+  ratioGreen: {
+    color: 'green'
+  }
+});

@@ -1,11 +1,13 @@
 import {
   GET_MARKET_CAP,
+  GET_GLOBAL_MARKET_CAP,
   GET_BTC_PERCENTILE,
   INIT_COINS,
   GET_COIN_PRICE,
   GET_WON_BY_DOLLAR,
   GET_TRANSACTIONS,
   GET_INFLATION,
+  GET_REDDIT_DATA,
 } from './types.js';
 import * as api from '../utils/api';
 
@@ -14,6 +16,11 @@ import * as api from '../utils/api';
 export const getMarketCap = (coin) => dispatch => {
   return api.getMarketCap(coin)
     .then(data => dispatch({type: GET_MARKET_CAP, data}));
+};
+
+export const getGlobalMarketCap = () => dispatch => {
+  return api.getGlobalMarketCap()
+    .then(data => dispatch({type: GET_GLOBAL_MARKET_CAP, data}));
 };
 
 export const getBTCPercentile = () => dispatch => {
@@ -63,4 +70,11 @@ export const getTransactions = () => dispatch => {
 export const getInflation = (value, year) => dispatch => {
   return api.getInflation(value, year)
     .then(data => dispatch({type: GET_INFLATION, data}))
+}
+
+// -------------------- COMMUNITIES Actions -----------------------
+export const getRedditData = () => dispatch => {
+  return api.loadReddit()
+  // .then(data => console.log('data', data))
+    .then(data => dispatch({type: GET_REDDIT_DATA, data}))
 }

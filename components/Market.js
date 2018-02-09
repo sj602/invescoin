@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Crypto from './Crypto';
 import { Loader } from './Loader';
 import {
-  getMarketCap,
+  getGlobalMarketCap,
   getBTCPercentile,
   initCoins,
   getCoinPrice,
@@ -35,7 +35,7 @@ class Market extends Component {
   componentDidMount() {
     // update info every 10 secs
     // setInterval(() => {
-      this.props.getMarketCap('bitcoin');
+      this.props.getGlobalMarketCap();
       this.props.getBTCPercentile();
       this.props.getWonByDollar();
     // }, 10000);
@@ -60,9 +60,9 @@ class Market extends Component {
 
   render() {
 
-    let { marketCap, bitcoinPercentage, wonByDollarPrice, coins } = this.props.state.market;
+    let { globalMarketCap, bitcoinPercentage, wonByDollarPrice, coins } = this.props.state.market;
     // let coins = this.state.currentlyDisplayed;
-    if(marketCap) marketCap = addComma3letters(marketCap);
+    if(globalMarketCap) globalMarketCap = addComma3letters(globalMarketCap);
 
     return (
       <View style={styles.container}>
@@ -74,7 +74,7 @@ class Market extends Component {
             -- Cryptocurrencies Global Info --
           </Text>
           <Text>
-            Total Market Cap(시가총액) : $ {marketCap}
+            Total Market Cap(시가총액) : $ {globalMarketCap}
           </Text>
           <Text>
             Bitcoin Dominance(비트코인 점유율) : {bitcoinPercentage} %
@@ -112,7 +112,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-  getMarketCap,
+  getGlobalMarketCap,
   getBTCPercentile,
   initCoins,
   getCoinPrice,

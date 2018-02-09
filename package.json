@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "art": "^0.10.1",
+    "cheerio-without-node-native": "^0.20.2",
     "d3": "^4.13.0",
     "d3-shape": "^1.2.0",
     "expo": "^23.0.4",

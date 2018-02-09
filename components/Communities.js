@@ -4,10 +4,19 @@ import {
   ActivityIndicator, Platform, StyleSheet,
   Button
 } from 'react-native';
+import { connect } from 'react-redux';
+import {
+  getRedditData,
+} from '../actions/index';
+import * as api from '../utils/api';
 
-export default class Communities extends Component {
+class Communities extends Component {
   state = {
     selectSites: ''
+  }
+
+  componentDidMount() {
+    this.props.getRedditData();
   }
 
   showLoadingView() {
@@ -22,7 +31,8 @@ export default class Communities extends Component {
 
   render() {
     const { selectSites } = this.state;
-
+    const { reddit } = this.props.state.communities;
+    reddit && console.log(reddit)
     if(selectSites === '') {
       return (
         <View>
@@ -51,7 +61,8 @@ export default class Communities extends Component {
             title='클리앙'
           />
 
-
+          <View>
+          </View>
         </View>
       )
     }
@@ -121,7 +132,15 @@ export default class Communities extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    state
+  }
+};
 
+export default connect(mapStateToProps, {
+  getRedditData
+})(Communities);
 
 const styles = StyleSheet.create(
   {

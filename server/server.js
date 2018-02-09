@@ -9,13 +9,12 @@ app.get('/interestOverTime/:keyword', (req, res) => {
     keyword: req.params.keyword
   })
     .then(data => {
-      res.json(JSON.parse(data));
+      console.log(data);
     })
     .catch(err => {
       console.log(err);
       res.sendStatus(500);
     })
-  // console.log(req.params.keyword)
 });
 app.get('/', (req, res) => {
   console.log('hello world!')
