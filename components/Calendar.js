@@ -28,11 +28,15 @@ export default class Calendar extends Component {
         <View>
           <Button
             onPress={() => this.setState({ selectCalendar: 'coin' })}
-            title='Coin News Calendar'
+            title='코인 호재 달력'
           />
           <Button
             onPress={() => this.setState({ selectCalendar: 'ICO' })}
-            title='ICO Calendar'
+            title='ICO 달력'
+          />
+          <Button
+            onPress={() => this.setState({ selectCalendar: 'scam' })}
+            title='스캠 코인 확인'
           />
         </View>
       )
@@ -59,6 +63,18 @@ export default class Calendar extends Component {
         />
       )
     }
+
+    else if(selectCalendar === 'scam'){
+      return (
+        <WebView
+          source={{uri: 'https://deadcoins.com'}}
+          renderLoading={this.showLoadingView}
+          startInLoadingState={true}
+          style={styles.WebViewStyle}
+        />
+      )
+    }
+
   }
 }
 

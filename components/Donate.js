@@ -23,22 +23,24 @@ export default class Donate extends Component {
   render() {
     return (
       <View>
-        <Text>
-          You can donate me if you get any useful information in this app.
-          Click each coin to copy the address :))
-        </Text>
-        <TouchableOpacity onPress={() => this.click('BTC')}>
+        <View>
           <Text>
-
-            BTC : {this.state.BTC}
+            이 앱을 통해 유용한 정보를 얻으셨으면 조금이나마 감사의 표시를 해주세요!
+            아래 비트코인과 이더리움 주소를 누르시면 클립보드에 복사됩니다. :))
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.click('ETH')}>
-          <Text>
-
-            ETH : {this.state.ETH}
-          </Text>
-        </TouchableOpacity>
+        </View>
+        <View style={{margin: 20}}>
+          <TouchableOpacity onPress={() => this.click('BTC')}>
+            <Text>
+              BTC : {this.state.BTC}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.click('ETH')}>
+            <Text>
+              ETH : {this.state.ETH}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }

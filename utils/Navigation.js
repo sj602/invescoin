@@ -13,24 +13,42 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export const Drawer = DrawerNavigator({
   Home: {
     screen: Home,
+    navigationOptions: {
+      title: '홈',
+    }
   },
   Bubble: {
-    screen: Bubble
+    screen: Bubble,
+    navigationOptions: {
+      title: '가치평가',
+    }
   },
   Market: {
-    screen: Market
+    screen: Market,
+    navigationOptions: {
+      title: '코인 시세',
+    }
   },
   Tweets: {
-    screen: Tweets
+    screen: Tweets,
+    navigationOptions: {
+      title: '트윗',
+    }
   },
   Calendar: {
-    screen: Calendar
+    screen: Calendar,
+    navigationOptions: {
+      title: 'ICO|호재',
+    }
   },
   Communities: {
-    screen: Communities
+    screen: Communities,
+    navigationOptions: {
+      title: '모아보기',
+    }
   },
   Donate: {
-    screen: Donate
+    screen: Donate,
   }
 });
 

@@ -152,10 +152,108 @@ export const getGoogleTrendsData = (keyword) => {
     }
   )
   .then(res => console.log(res))
-  // .then(data => console.log('data', data))
 }
 
 ///////////////////////////// Communites APIs ///////////////////////
+export async function loadDC() {
+  const searchUrl = `http://gall.dcinside.com/mgallery/board/lists/?id=ecoin&page=1&exception_mode=recommend`;
+  const response = await fetch(searchUrl);
+
+  const htmlString = await response.text();
+  const cheerio = require('cheerio-without-node-native');
+  const $ = cheerio.load(htmlString);
+  return $("div[data-rank]")
+    .map((_, e) => ({
+      timestamp: $(e).attr('data-timestamp'),
+      rank: $(e).attr('data-rank'),
+      score: $(e).attr('data-score'),
+      comments: $(e).attr('data-comments-count'),
+      title: $("a[data-event-action='title']", e).text(),
+      data: $(e).attr('data-url'),
+      thumbnail: $("a[data-event-action='thumbnail'] img", e).attr('src')
+    }));
+}
+
+export async function loadDCB() {
+  const searchUrl = `http://gall.dcinside.com/board/lists/?id=bitcoins&page=1&exception_mode=recommend`;
+  const response = await fetch(searchUrl);
+
+  const htmlString = await response.text();
+  const cheerio = require('cheerio-without-node-native');
+  const $ = cheerio.load(htmlString);
+  return $("div[data-rank]")
+    .map((_, e) => ({
+      timestamp: $(e).attr('data-timestamp'),
+      rank: $(e).attr('data-rank'),
+      score: $(e).attr('data-score'),
+      comments: $(e).attr('data-comments-count'),
+      title: $("a[data-event-action='title']", e).text(),
+      data: $(e).attr('data-url'),
+      thumbnail: $("a[data-event-action='thumbnail'] img", e).attr('src')
+    }));
+}
+
+export async function loadDCA() {
+  const searchUrl = `http://gall.dcinside.com/mgallery/board/lists/?id=coin&page=1&exception_mode=recommend`;
+  const response = await fetch(searchUrl);
+
+  const htmlString = await response.text();
+  const cheerio = require('cheerio-without-node-native');
+  const $ = cheerio.load(htmlString);
+  return $("div[data-rank]")
+}
+
+export async function loadDdengle() {
+  const searchUrl = `https://www.ddengle.com/board_vote_all`;
+  const response = await fetch(searchUrl);
+
+  const htmlString = await response.text();
+  const cheerio = require('cheerio-without-node-native');
+  const $ = cheerio.load(htmlString);
+  return $("tbody")[0]['children']
+    .map((_, e) => {
+    return console.log({
+      title: $(".title a[class='hx bubble no_bubble']").text(),
+      // timestamp: $(".time", e['children']),
+      // likes: $("td:third-child", e).text(),
+      // views: $("td:fourth-child", e).text(),
+      // comments: $(".title a:second-child", e).text(),
+      // data: $(".title a:first-chld", e).attr('href'),
+    })
+  }
+  );
+}
+
+
+export async function loadCoinpan() {
+  const searchUrl = `https://coinpan.com/best`;
+  const response = await fetch(searchUrl);
+
+  const htmlString = await response.text();
+  const cheerio = require('cheerio-without-node-native');
+  const $ = cheerio.load(htmlString);
+  return $("div[data-rank]")
+}
+
+export async function loadClien() {
+  const searchUrl = `https://www.clien.net/service/board/cm_vcoin?&od=T33`;
+  const response = await fetch(searchUrl);
+
+  const htmlString = await response.text();
+  const cheerio = require('cheerio-without-node-native');
+  const $ = cheerio.load(htmlString);
+  return $("div[class='list_item symph_row']")
+    .map((_, e) => ({
+      timestamp: $("span.timestamp", e).text(),
+      hits: $("span.hit", e).text(),
+      score: $("div[data-role='list-like-count'] span", e).text(),
+      comments: $("div[data-role='list-title'] a:nth-child(2) span", e).text(),
+      title: $("span[data-role='list-title-text']", e).text(),
+      data: $("a.list_subject", e).attr('href'),
+    }));
+}
+
+
 export async function loadReddit() {
   const searchUrl = `https://www.reddit.com/r/Bitcoin/`;
   const response = await fetch(searchUrl);
@@ -164,9 +262,7 @@ export async function loadReddit() {
   const cheerio = require('cheerio-without-node-native');
   const $ = cheerio.load(htmlString);
   return $("div[data-rank]")
-    .map((e) => {
-      console.log(e)
-      return ({
+    .map((_, e) => ({
       timestamp: $(e).attr('data-timestamp'),
       rank: $(e).attr('data-rank'),
       score: $(e).attr('data-score'),
@@ -174,6 +270,5 @@ export async function loadReddit() {
       title: $("a[data-event-action='title']", e).text(),
       data: $(e).attr('data-url'),
       thumbnail: $("a[data-event-action='thumbnail'] img", e).attr('src')
-    })
-  });
+    }));
 }
