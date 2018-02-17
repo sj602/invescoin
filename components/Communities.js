@@ -10,6 +10,7 @@ import {
   getRedditData,
   getDdengleData,
   getClienData,
+  getDCBData,
 } from '../actions/index';
 import * as api from '../utils/api';
 
@@ -25,6 +26,79 @@ class Communities extends Component {
     const { selectSites } = this.state;
 
     switch(selectSites) {
+      case 'dcb':
+        const { dcb } = this.props.state.communities;
+
+        return (
+          <ScrollView>
+            <Text>
+              디시인사이드 비트코인 갤러리에서 최신글을 가져옵니다.
+            </Text>
+            {
+              dcb && Object.keys(dcb).map(k => {
+                if( k !== '0' && k !== '1' && k.length < 3 ) {
+                  const title = dcb[k]['title'];
+                  const hits = dcb[k]['hits'];
+                  const data = dcb[k]['data'];
+                  const score = dcb[k]['score'];
+                  const comments = dcb[k]['comments'];
+
+                  return (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(data)}
+                    >
+                      <View
+                        style={{flex:1, margin: 5, flexDirection: 'row', borderWidth: 1}}
+                        key={reddit[k]}
+                      >
+                        <View
+                          style={{flex:1, margin: 3, flexDirection: 'column'}}
+                        >
+                          <View
+                            style={{flex:1, height: 75, justifyContent: 'center'}}
+                          >
+                            <Text>
+                              <Icon
+                                name='star'
+                                size={12}
+                                color='gold'
+                              />
+                              {hits}
+                            </Text>
+                            <Text>
+                              <Icon
+                                name='comment'
+                                size={12}
+                                color='grey'
+                              />
+                              {comments}
+                            </Text>
+                            <Text>
+                              <Icon
+                                name='thumbs-up'
+                                size={12}
+                                color='lightblue'
+                              />
+                              {score}
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          style={{flex: 4, justifyContent: 'center', alignItems: 'center', width: 200, height: 150}}
+                        >
+                          <Text>
+                            {title}
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )
+                }
+              })
+            }
+          </ScrollView>
+        )
+
       case 'red':
         const { reddit } = this.props.state.communities;
 
@@ -108,11 +182,77 @@ class Communities extends Component {
           </ScrollView>
         )
       case 'ddg':
+        const { ddengle } = this.props.state.communities;
+
         return (
           <ScrollView>
             <Text>
               땡글에서 추천글을 가져옵니다.
             </Text>
+            { ddengle && Object.keys(ddengle).map(k => {
+              const title = ddengle[k]['title'];
+              const data = ddengle[k]['data'];
+              const likes = ddengle[k]['likes'];
+              const hits = ddengle[k]['hits'];
+              const comments = ddengle[k]['comments'];
+              const timestamp = ddengle[k]['timestamp'];
+
+              return (
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(data)}
+                >
+                  <View
+                    style={{flex:1, margin: 5, flexDirection: 'row', borderWidth: 1}}
+                    key={ddengle[k]}
+                  >
+                    <View
+                      style={{flex:1, margin: 3, flexDirection: 'column'}}
+                    >
+                      <View
+                        style={{flex:1, height: 75, justifyContent: 'center'}}
+                      >
+                        <Text>
+                          <Icon
+                            name='comment'
+                            size={12}
+                            color='grey'
+                          />
+                          {comments}
+                        </Text>
+                        <Text>
+                          <Icon
+                            name='thumbs-up'
+                            size={12}
+                            color='lightblue'
+                          />
+                          {likes}
+                        </Text>
+                        <Text>
+                          <Icon
+                            name='eye'
+                            size={12}
+                            color='black'
+                          />
+                          {hits}
+                        </Text>
+                        <Text style={{fontSize:8}}>
+                          {timestamp}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{flex: 4, justifyContent: 'center', alignItems: 'center'}}
+                    >
+                      <Text>
+                        {title}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+
+              )
+            })}
+
           </ScrollView>
         )
       case 'cla':
@@ -213,20 +353,11 @@ class Communities extends Component {
       <View>
         <View>
           <Button
-            onPress={() => this.setState({ selectSites: 'dc' })}
-            title='디시인사이드 가상화폐 갤러리'
-          />
-        </View>
-        <View>
-          <Button
-            onPress={() => this.setState({ selectSites: 'dcb' })}
+            onPress={() => {
+              this.props.getDCBData();
+              this.setState({ selectSites: 'dcb' })
+            }}
             title='디시인사이드 비트코인 갤러리'
-          />
-        </View>
-        <View>
-          <Button
-            onPress={() => this.setState({ selectSites: 'dca' })}
-            title='디시인사이드 알트코인 갤러리'
           />
         </View>
         <View>
@@ -261,9 +392,6 @@ class Communities extends Component {
             }}
             title='레딧'
           />
-          <Text>
-            Sort by HOT...
-          </Text>
           {this.renderContents()}
         </View>
       </View>
@@ -281,6 +409,7 @@ export default connect(mapStateToProps, {
   getRedditData,
   getDdengleData,
   getClienData,
+  getDCBData,
 })(Communities);
 
 const styles = StyleSheet.create(

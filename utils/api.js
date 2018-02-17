@@ -155,52 +155,26 @@ export const getGoogleTrendsData = (keyword) => {
 }
 
 ///////////////////////////// Communites APIs ///////////////////////
-export async function loadDC() {
-  const searchUrl = `http://gall.dcinside.com/mgallery/board/lists/?id=ecoin&page=1&exception_mode=recommend`;
-  const response = await fetch(searchUrl);
-
-  const htmlString = await response.text();
-  const cheerio = require('cheerio-without-node-native');
-  const $ = cheerio.load(htmlString);
-  return $("div[data-rank]")
-    .map((_, e) => ({
-      timestamp: $(e).attr('data-timestamp'),
-      rank: $(e).attr('data-rank'),
-      score: $(e).attr('data-score'),
-      comments: $(e).attr('data-comments-count'),
-      title: $("a[data-event-action='title']", e).text(),
-      data: $(e).attr('data-url'),
-      thumbnail: $("a[data-event-action='thumbnail'] img", e).attr('src')
-    }));
-}
-
 export async function loadDCB() {
-  const searchUrl = `http://gall.dcinside.com/board/lists/?id=bitcoins&page=1&exception_mode=recommend`;
+  const searchUrl = `http://gall.dcinside.com/board/lists/?id=bitcoins`;
+  const searchUrByRec = `http://gall.dcinside.com/board/lists/?id=bitcoins&page=1&exception_mode=recommend`;
   const response = await fetch(searchUrl);
 
   const htmlString = await response.text();
   const cheerio = require('cheerio-without-node-native');
   const $ = cheerio.load(htmlString);
-  return $("div[data-rank]")
-    .map((_, e) => ({
-      timestamp: $(e).attr('data-timestamp'),
-      rank: $(e).attr('data-rank'),
-      score: $(e).attr('data-score'),
-      comments: $(e).attr('data-comments-count'),
-      title: $("a[data-event-action='title']", e).text(),
-      data: $(e).attr('data-url'),
-      thumbnail: $("a[data-event-action='thumbnail'] img", e).attr('src')
-    }));
-}
-
-export async function loadDCA() {
-  const searchUrl = `http://gall.dcinside.com/mgallery/board/lists/?id=coin&page=1&exception_mode=recommend`;
-  const response = await fetch(searchUrl);
-
-  const htmlString = await response.text();
-  const cheerio = require('cheerio-without-node-native');
-  const $ = cheerio.load(htmlString);
-  return $("div[data-rank]")
+  return console.log(response);
+  // response의 bodyText가 ""임. 다른 사이트는 내용이 있는 반면.
+    // .map((_, e) => console.log(e))
+    // ({
+    //   timestamp: $('td.t_date', e).attr('title'),
+    //   hits: $('td:nth-chiild(5)', e).text(),
+    //   score: $('td:nth-chiild(6)', e).text(),
+    //   comments: $("td.t_subject a:nth-child(2) em", e).text(),
+    //   title: $("td.t_subject a", e).text(),
+    //   data: $("td.t_subject a", e).attr('href'),
+    // })
+  // );
 }
 
 export async function loadDdengle() {
@@ -210,18 +184,19 @@ export async function loadDdengle() {
   const htmlString = await response.text();
   const cheerio = require('cheerio-without-node-native');
   const $ = cheerio.load(htmlString);
-  return $("tbody")[0]['children']
-    .map((_, e) => {
-    return console.log({
-      title: $(".title a[class='hx bubble no_bubble']").text(),
-      // timestamp: $(".time", e['children']),
-      // likes: $("td:third-child", e).text(),
-      // views: $("td:fourth-child", e).text(),
-      // comments: $(".title a:second-child", e).text(),
-      // data: $(".title a:first-chld", e).attr('href'),
-    })
-  }
-  );
+
+  let data = $("tbody")[0]['children'];
+  data.pop();
+  data.shift();
+
+  return data.map(k => ({
+    data: k.children[3]['children'][1]['attribs']['href'],
+    title: k.children[3]['children'][1]['children'][0]['data'].trim(),
+    comments: k.children[3]['children'][3]['children'][0]['data'],
+    likes: k.children[5]['children'][0]['data'],
+    hits: k.children[7]['children'][0]['data'],
+    timestamp: k.children[11]['children'][0]['data'],
+  }));
 }
 
 

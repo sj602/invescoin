@@ -7,9 +7,7 @@ import {
   GET_WON_BY_DOLLAR,
   GET_TRANSACTIONS,
   GET_INFLATION,
-  GET_DC_DATA,
   GET_DCB_DATA,
-  GET_DCA_DATA,
   GET_DDENGLE_DATA,
   GET_COINPAN_DATA,
   GET_CLIEN_DATA,
@@ -79,18 +77,11 @@ export const getInflation = (value, year) => dispatch => {
 }
 
 // -------------------- COMMUNITIES Actions -----------------------
-export const getDCData = () => dispatch => {
-  return api.loadDC()
-    .then(data => dispatch({type: GET_DC_DATA, data}))
-}
 export const getDCBData = () => dispatch => {
   return api.loadDCB()
     .then(data => dispatch({type: GET_DCB_DATA, data}))
 }
-export const getDCAData = () => dispatch => {
-  return api.loadDCA()
-    .then(data => dispatch({type: GET_DCA_DATA, data}))
-}
+
 export const getDdengleData = () => dispatch => {
   return api.loadDdengle()
     .then(data => dispatch({type: GET_DDENGLE_DATA, data}))
