@@ -48,11 +48,8 @@ class Bubble extends Component {
             />
             <Button
               onPress={() => {
-                console.log('keyword: ', this.state.keyword)
-                return api.getGoogleTrendsData(this.state.keyword)
+                console.log(api.getGoogleTrendsData(this.state.keyword))
               }}
-                // this.setState({
-                // result: api.getGoogleTrendsData(this.state.keyword)
               title='Find'
             />
           </View>
@@ -68,11 +65,20 @@ class Bubble extends Component {
     if(this.state.NVTShow) {
       let { marketCap, transactionsVolume } = this.props.state.bubble.NVT_Ratio;
       let ratio = (marketCap / transactionsVolume).toFixed(2);
-      let ratioText = (ratio < 50 ? '현재 저평가 되었습니다.' : ratio > 100 ? '현재 고평가 되었습니다.' : '현재 적정 수준입니다.');
+      let coin = `btc`;
+      let ratioText = (ratio < 50 ? `현재 ${coin}은(는) 저평가 되었습니다.` : ratio > 100 ? `현재 ${coin}은(는) 고평가 되었습니다.` : `현재 ${coin}은(는) 적정 수준입니다.`);
 
       return (
         <View>
           <View style={{justifyContent:'center', alignItems: 'center'}}>
+            <Picker
+              selectedValue={coin}
+              onValueChange={(itemValue) => this.setState({coin: itemValue})}
+              mode='dialog'
+            >
+              <Picker.Item label="BTC" value="btc" />
+              <Picker.Item label="ETH" value="eth" />
+            </Picker>
             <Text>
               Network Value : $ {addComma3letters(marketCap)}
             </Text>
@@ -83,7 +89,7 @@ class Bubble extends Component {
               NVT Ratio : { ratio }
             </Text>
             <Text>
-              {ratioText}
+              {ratioText}\n
             </Text>
           </View>
           <View>
@@ -94,7 +100,7 @@ class Bubble extends Component {
               NVT Ratio가 50과 100 사이에 있으면 적정, 50 이하는 저평가, 100 이상은 고평가일 확률이 높습니다.
             </Text>
             <Text>
-              NVT Ratio는 실시간 지표이며 보다 정확한 분석을 위한 Moving Average 지표는 구현 중 입니다.
+              NVT Ratio는 실시간 지표이므로 보다 정확한 분석을 위한 Moving Average 지표는 구현 중 입니다.
             </Text>
             <Text
               style={{color: 'blue'}}
@@ -221,7 +227,7 @@ class Bubble extends Component {
               }))
             }}
           >
-            Comparing the size of historic bubbles
+            역사적인 버블의 시가총액 비교
           </Icon.Button>
         </TouchableOpacity>
         { this.renderHistoricBubble() }

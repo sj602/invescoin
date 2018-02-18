@@ -7,11 +7,11 @@ const Dollar_URL = `http://api.fixer.io/latest?base=USD`;
 const Transactions_URL = `https://api.blockchain.info/stats`;
 const Inflation_URL = `https://inflation-api.herokuapp.com/api/?`;
 const GoogleTrends_URL = `http://localhost:3000/interestOverTime/`;
+
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
 };
-
 
 export const marketBithumb = (coin) => {
   return fetch(
@@ -151,7 +151,9 @@ export const getGoogleTrendsData = (keyword) => {
       headers,
     }
   )
-  .then(res => console.log(res))
+  .then(res => console.log('res', res))
+  .then(data => data)
+  .catch(e => console.log('error: ', e))
 }
 
 ///////////////////////////// Communites APIs ///////////////////////

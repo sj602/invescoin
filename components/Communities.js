@@ -357,7 +357,7 @@ class Communities extends Component {
               this.props.getDCBData();
               this.setState({ selectSites: 'dcb' })
             }}
-            title='디시인사이드 비트코인 갤러리'
+            title='디시인사이드 비트코인 갤러리 (개발중)'
           />
         </View>
         <View>
@@ -372,7 +372,7 @@ class Communities extends Component {
         <View>
           <Button
             onPress={() => this.setState({ selectSites: 'cip' })}
-            title='코인판'
+            title='코인판 (회원제)'
           />
         </View>
         <View>

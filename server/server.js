@@ -9,16 +9,18 @@ app.get('/interestOverTime/:keyword', (req, res) => {
     keyword: req.params.keyword
   })
     .then(data => {
-      console.log(data);
+      res.json(JSON.parse(data));
     })
     .catch(err => {
       console.log(err);
       res.sendStatus(500);
     })
 });
+
 app.get('/', (req, res) => {
   console.log('hello world!')
 })
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
 });
