@@ -2,11 +2,13 @@ const express = require('express');
 const googleTrends = require('google-trends-api');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || '3000';
 
-app.get('/interestOverTime/:keyword', (req, res) => {
+app.get('/interestOverTime/:keyword/:startDate/:endDate', (req, res) => {
   return googleTrends.interestOverTime({
-    keyword: req.params.keyword
+    keyword: req.params.keyword,
+    startTime: new Date(req.params.startDate),
+    endTime: new Date(req.params.endDate)
   })
     .then(data => {
       res.json(JSON.parse(data));
@@ -21,6 +23,6 @@ app.get('/', (req, res) => {
   console.log('hello world!')
 })
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`)
 });

@@ -29,6 +29,8 @@
     "https": "^1.0.0",
     "react": "16.0.0",
     "react-native": "0.50.3",
+    "react-native-svg": "^5.5.1",
+    "react-native-svg-charts": "^3.0.1",
     "react-native-svg-uri": "^1.2.3",
     "react-native-vector-icons": "^4.4.3",
     "react-navigation": "^1.0.0-beta.22",
@@ -37,10 +39,5 @@
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0"
-  },
-  "rnpm": {
-    "assets": [
-      "./assets/fonts"
-    ]
   }
 }

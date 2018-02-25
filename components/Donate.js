@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Clipboard
+  View, Text, TouchableOpacity, Clipboard,
+  Animated,
 } from 'react-native';
 
 export default class Donate extends Component {
-  state = {
-    BTC: '1APTUw7u8AjDMfFvqqUypDqSmC4pS5E43R',
-    ETH: '0xc0f7E9129158f2A73d63ee13F171Dd8Afad9cA19'
+  constructor(props) {
+    super(props);
+    this.state = {
+      BTC: '1APTUw7u8AjDMfFvqqUypDqSmC4pS5E43R',
+      ETH: '0xc0f7E9129158f2A73d63ee13F171Dd8Afad9cA19',
+      x: new Animated.Value(100)
+    }
+  }
+
+  aniClick() {
+    Animated.spring(
+      this.state.x,
+      {toValue: 200}
+    ).start();
   }
 
   click(coin) {
@@ -25,7 +37,7 @@ export default class Donate extends Component {
       <View>
         <View>
           <Text>
-            이 앱을 통해 유용한 정보를 얻으셨으면 조금이나마 감사의 표시를 해주세요!
+            더 좋은 인베스코인이 되기 위해 노력하겠습니다.
             아래 비트코인과 이더리움 주소를 누르시면 클립보드에 복사됩니다. :))
           </Text>
         </View>
@@ -41,6 +53,13 @@ export default class Donate extends Component {
             </Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          onPress={() => this.aniClick()}
+        >
+          <Animated.View style={{backgroundColor: 'red',
+                                 height: 40, width: this.state.x}}>
+          </Animated.View>
+        </TouchableOpacity>
       </View>
     )
   }

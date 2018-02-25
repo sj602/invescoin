@@ -6,8 +6,8 @@ const Bitfinex_URL = `https://api.cryptowat.ch/markets/bitfinex`;
 const Dollar_URL = `http://api.fixer.io/latest?base=USD`;
 const Transactions_URL = `https://api.blockchain.info/stats`;
 const Inflation_URL = `https://inflation-api.herokuapp.com/api/?`;
-const GoogleTrends_URL = `http://localhost:3000/interestOverTime/`;
-
+const GoogleTrends_URL = `http://192.168.108.2:3000/interestOverTime`;
+const BitcoinPriceIndex_URL = `https://api.coindesk.com/v1/bpi/historical/close.json`;
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
@@ -143,17 +143,34 @@ export const getInflation = (value, year) => {
   .then(data => data.response.adjustedValue)
 }
 
-export const getGoogleTrendsData = (keyword) => {
+export const getGoogleTrendsData = (keyword, startDate, endDate) => {
+  startDate = '20' + startDate.substring(0,2) + '-' + startDate.substring(2,4) + '-' + startDate.substring(4,6);
+  endDate = '20' + endDate.substring(0,2) + '-' + endDate.substring(2,4) + '-' + endDate.substring(4,6);
+  console.log('google: start', startDate, 'end', endDate)
   return fetch(
-    `${GoogleTrends_URL}${keyword}`,
+    `${GoogleTrends_URL}/${keyword}/${startDate}/${endDate}`,
     {
       method: 'GET',
       headers,
     }
   )
-  .then(res => console.log('res', res))
+  .then(res => res.json())
   .then(data => data)
-  .catch(e => console.log('error: ', e))
+}
+
+export const getBitcoinPriceIndex = (startDate, endDate) => {
+  startDate = '20' + startDate.substring(0,2) + '-' + startDate.substring(2,4) + '-' + startDate.substring(4,6);
+  endDate = '20' + endDate.substring(0,2) + '-' + endDate.substring(2,4) + '-' + endDate.substring(4,6);
+
+  return fetch(
+    `${BitcoinPriceIndex_URL}?start=${startDate}&end=${endDate}`,
+    {
+      method: 'GET',
+      headers,
+    }
+  )
+  .then(res => res.json())
+  .then(data => data['bpi'])
 }
 
 ///////////////////////////// Communites APIs ///////////////////////

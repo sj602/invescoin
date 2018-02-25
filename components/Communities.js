@@ -276,7 +276,7 @@ class Communities extends Component {
                   onPress={() => Linking.openURL('https://clien.net' + data)}
                 >
                   <View
-                    style={{flex:1, margin: 5, flexDirection: 'row', borderWidth: 1}}
+                    style={{flex:1, margin: 5, flexDirection: 'row'}}
                     key={clien[k]}
                   >
                     <View

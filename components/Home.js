@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View, Text, StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
+// ----------------- Routing for home menu------------------------
+// import Bubble from '../components/Bubble';
+// import Tweets from '../components/Tweets';
+// import Market from '../components/Market';
+// import Calendar from '../components/Calendar';
+// import Communities from '../components/Communities';
+// import Donate from '../components/Donate';
+
+// const navigateAction = NavigationActions.navigate({
+//   routeName: 'Bubble',
+//
+//   params: {},
+//
+//   action: NavigationActions.navigate({ routeName: 'Bubble' }),
+// });
 
 export default class Home extends Component {
   render() {
@@ -9,11 +28,14 @@ export default class Home extends Component {
       <View style={styles.container}>
         <View style={styles.menuContainer}>
           <View style={styles.menuImage}>
-            <Icon
-              name='check-square-o'
-              size={50}
-              color='black'
-            />
+            <TouchableOpacity
+            >
+              <Icon
+                name='check-square-o'
+                size={50}
+                color='black'
+              />
+            </TouchableOpacity>
             <Text>가치평가</Text>
           </View>
           <View style={styles.menuText}>
@@ -97,7 +119,7 @@ export default class Home extends Component {
           </View>
           <View style={styles.menuText}>
             <Text>
-              개발자에게 따뜻한 온정을 베풀어주세요!
+              앱의 발전을 위해 따뜻한 온정을 베풀어주세요!
             </Text>
           </View>
         </View>

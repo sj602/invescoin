@@ -71,16 +71,13 @@ class Market extends Component {
         />
         <View>
           <Text>
-            -- Cryptocurrencies Global Info --
+            암호화폐 총 시가총액 : $ {globalMarketCap}
           </Text>
           <Text>
-            Total Market Cap(시가총액) : $ {globalMarketCap}
+            비트코인 점유율 : {bitcoinPercentage} %
           </Text>
           <Text>
-            Bitcoin Dominance(비트코인 점유율) : {bitcoinPercentage} %
-          </Text>
-          <Text>
-            Won / Dollar ratio(원/달러 환율) : {wonByDollarPrice}
+            원/달러 환율 : {wonByDollarPrice}
           </Text>
         </View>
 
