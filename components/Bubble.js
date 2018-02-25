@@ -129,7 +129,6 @@ class Bubble extends Component {
                 onPress={() => {
                   if(this.inputValidated()){
                     let {startDate, endDate} = this.state;
-                    console.log('startDate', startDate, 'endDate', endDate)
                     api.getGoogleTrendsData(this.state.keyword, startDate, endDate).then(data => this.setState({result: data.default.timelineData}));
                     api.getBitcoinPriceIndex(startDate, endDate).then(price => this.setState({price}));
                   }
