@@ -15,15 +15,19 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Dimensions from 'Dimensions';
 import * as api from '../utils/api';
-import { addComma3letters } from '../utils/helpers';
+import {
+  addComma3letters,
+  getStartDate,
+  getEndDate
+} from '../utils/helpers';
 
 class Bubble extends Component {
   state = {
     coin: 'bitcoin',
     loading: true,
     keyword: 'btc usd',
-    startDate: '180101',
-    endDate: '180223',
+    startDate: getStartDate(),
+    endDate: getEndDate(),
     result: '',
     price: {},
     googleShow: false,
@@ -186,7 +190,7 @@ class Bubble extends Component {
         <View>
           <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1, alignItems: 'center'}}>
-              <Text>
+              <Text style={{textAlign: 'center'}}>
                 코인 선택
               </Text>
             </View>
