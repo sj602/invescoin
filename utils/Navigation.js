@@ -57,6 +57,7 @@ let handleDrawer = ['DrawerOpen', 'DrawerClose'];
 export const Stacks = StackNavigator({
   Home: { screen: Drawer },
 }, {
+    initialRouteName: 'Home',
     navigationOptions: ({navigation}) => ({
       headerLeft:
                   <TouchableOpacity

@@ -1,8 +1,8 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "a google cloud server fetching data from google-trends-api",
+  "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "^4.16.2",
     "google-trends-api": "^4.5.0",
-    "mongojs": "^2.4.1",
     "nodemon": "^1.15.1"
-  }
+  },
+  "devDependencies": {}
 }

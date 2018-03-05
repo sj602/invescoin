@@ -4,31 +4,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import { Drawer, Stacks } from '../utils/Navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
-// ----------------- Routing for home menu------------------------
-// import Bubble from '../components/Bubble';
-// import Tweets from '../components/Tweets';
-// import Market from '../components/Market';
-// import Calendar from '../components/Calendar';
-// import Communities from '../components/Communities';
-// import Donate from '../components/Donate';
-
-// const navigateAction = NavigationActions.navigate({
-//   routeName: 'Bubble',
-//
-//   params: {},
-//
-//   action: NavigationActions.navigate({ routeName: 'Bubble' }),
-// });
 
 export default class Home extends Component {
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <View style={styles.menuContainer}>
           <View style={styles.menuImage}>
             <TouchableOpacity
+              onPress={() => navigate('Bubble')}
             >
               <Icon
                 name='check-square-o'
@@ -47,11 +36,15 @@ export default class Home extends Component {
         </View>
         <View style={styles.menuContainer}>
           <View style={styles.menuImage}>
-            <Icon
-              name='money'
-              size={50}
-              color='green'
-            />
+            <TouchableOpacity
+              onPress={() => navigate('Market')}
+            >
+              <Icon
+                name='money'
+                size={50}
+                color='green'
+              />
+            </TouchableOpacity>
             <Text>코인 시세</Text>
           </View>
           <View style={styles.menuText}>
@@ -63,11 +56,15 @@ export default class Home extends Component {
         </View>
         <View style={styles.menuContainer}>
           <View style={styles.menuImage}>
-            <Icon
-              name='twitter'
-              size={50}
-              color='#00aced'
-            />
+            <TouchableOpacity
+              onPress={() => navigate('Tweets')}
+            >
+              <Icon
+                name='twitter'
+                size={50}
+                color='#00aced'
+              />
+            </TouchableOpacity>
             <Text>트윗</Text>
           </View>
           <View style={styles.menuText}>
@@ -79,11 +76,15 @@ export default class Home extends Component {
         </View>
         <View style={styles.menuContainer}>
           <View style={styles.menuImage}>
-            <Icon
-              name='calendar'
-              size={50}
-              color='#999999'
-            />
+            <TouchableOpacity
+              onPress={() => navigate('Calendar')}
+            >
+              <Icon
+                name='calendar'
+                size={50}
+                color='#999999'
+              />
+            </TouchableOpacity>
             <Text>ICO|호재</Text>
           </View>
           <View style={styles.menuText}>
@@ -94,11 +95,15 @@ export default class Home extends Component {
         </View>
         <View style={styles.menuContainer}>
           <View style={styles.menuImage}>
-            <Icon1
-              name='message-bulleted'
-              size={50}
-              color='#ffc300'
-            />
+            <TouchableOpacity
+              onPress={() => navigate('Communities')}
+            >
+              <Icon1
+                name='message-bulleted'
+                size={50}
+                color='#ffc300'
+              />
+            </TouchableOpacity>
             <Text>모아보기</Text>
           </View>
           <View style={styles.menuText}>
@@ -110,11 +115,15 @@ export default class Home extends Component {
         </View>
         <View style={styles.menuContainer}>
           <View style={styles.menuImage}>
-            <Icon
-              name='smile-o'
-              size={50}
-              color='#fa6446'
-            />
+            <TouchableOpacity
+              onPress={() => navigate('Donate')}
+            >
+              <Icon
+                name='smile-o'
+                size={50}
+                color='#fa6446'
+              />
+            </TouchableOpacity>
             <Text>Donate</Text>
           </View>
           <View style={styles.menuText}>

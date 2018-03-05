@@ -5,18 +5,18 @@
     "name": "InvesCoin",
     "description": "Helping investment to Cryptocurrencies",
     "slug": "invescoin",
-    "version": "3.0",
+    "version": "2.0",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover"
     },
     "ios": {
-     "bundleIdentifier": "com.jin.invescoin",
+     "bundleIdentifier": "com.jinapp.invescoin",
     },
     "android": {
-     "package": "com.jin.invescoin",
-     "versionCode": 3
+     "package": "com.jinapp.invescoin",
+     "versionCode": 2
     }
   },
 }

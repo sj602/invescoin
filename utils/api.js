@@ -6,7 +6,8 @@ const Bitfinex_URL = `https://api.cryptowat.ch/markets/bitfinex`;
 const Dollar_URL = `http://api.fixer.io/latest?base=USD`;
 const Transactions_URL = `https://api.blockchain.info/stats`;
 const Inflation_URL = `https://inflation-api.herokuapp.com/api/?`;
-const GoogleTrends_URL = `http://192.168.108.2:3000/interestOverTime`;
+// const GoogleTrends_URL = `http://192.168.108.2:3000/interestOverTime`;
+const GoogleTrends_URL = `https://invescoin-52d55.appspot.com/interestOverTime`; // Google Cloud Server
 const BitcoinPriceIndex_URL = `https://api.coindesk.com/v1/bpi/historical/close.json`;
 const headers = {
   'Accept': 'application/json',
@@ -146,7 +147,7 @@ export const getInflation = (value, year) => {
 export const getGoogleTrendsData = (keyword, startDate, endDate) => {
   startDate = '20' + startDate.substring(0,2) + '-' + startDate.substring(2,4) + '-' + startDate.substring(4,6);
   endDate = '20' + endDate.substring(0,2) + '-' + endDate.substring(2,4) + '-' + endDate.substring(4,6);
-  console.log('google: start', startDate, 'end', endDate)
+
   return fetch(
     `${GoogleTrends_URL}/${keyword}/${startDate}/${endDate}`,
     {

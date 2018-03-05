@@ -77,7 +77,7 @@ class Bubble extends Component {
       let {startDate, endDate} = this.state;
 
       return (
-        <View>
+        <View style={styles.component}>
           <View style={{flex:1, flexDirection: 'row', margin: 5}}>
             <View style={{flex:1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
               <View style={{flexDirection: 'row'}}>
@@ -389,5 +389,8 @@ const styles = StyleSheet.create({
   },
   ratioGreen: {
     color: 'green'
+  },
+  component: {
+    marginBottom: 10
   }
 });
