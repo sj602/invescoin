@@ -16,21 +16,18 @@ import {
 } from '../actions/index';
 import * as api from '../utils/api';
 import { cryptoList } from '../utils/cryptoList';
-import { addComma3letters } from '../utils/helpers';
+import {
+  addComma3letters,
+} from '../utils/helpers';
 
 class Market extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: '',
       loading: false,
       currentlyDisplayed: this.props.state.market.coins
     }
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log('completed');
-  // }
 
   componentDidMount() {
     // update info every 10 secs
@@ -49,19 +46,16 @@ class Market extends Component {
     }
   }
 
-  handleSearch(e) {
+  handleSearch(searchValue) {
     let { coins } = this.props.state.market;
-    let newlyDisplayed = coins.filter((coin) => coin.symbolBig.includes('BTC'))
-    this.setState({
-      searchValue: e.target.value,
-      currentlyDisplayed: newlyDisplayed
-    })
+    let copiedCoins = Object.keys(coins).map(key => coins[key]) // deepcopy coins to change format from object to array for mapping.
+    let newlyDisplayed = copiedCoins.filter((coin) => coin.symbolBig.includes(searchValue))
+    this.setState({ currentlyDisplayed: newlyDisplayed })
   }
 
   render() {
-
-    let { globalMarketCap, bitcoinPercentage, wonByDollarPrice, coins } = this.props.state.market;
-    // let coins = this.state.currentlyDisplayed;
+    let { globalMarketCap, bitcoinPercentage, wonByDollarPrice } = this.props.state.market;
+    let coins = this.state.currentlyDisplayed ? this.state.currentlyDisplayed : this.props.state.market.coins;
     if(globalMarketCap) globalMarketCap = addComma3letters(globalMarketCap);
 
     return (
@@ -80,18 +74,16 @@ class Market extends Component {
             원/달러 환율 : {wonByDollarPrice}
           </Text>
         </View>
-
         <TextInput
-         value={this.state.searchValue}
-         onChange={(e) => this.handleSearch(e)}
-         placeholder='Search a coin (e.g Bitcoin or BTC)'
+          onChangeText={(searchValue) => this.handleSearch(searchValue)}
+          placeholder='검색 (예시: Bitcoin or BTC)'
         />
         <Text>개발중 : 현재 코인 시총 TOP20 만 제공됩니다.</Text>
         <ScrollView>
           {
             coins && Object.keys(coins).map((coin) => {
               return (
-                <Crypto key={coin} coin={coins[coin]} name={coin}/>
+                <Crypto key={coin} coin={coins[coin]} name={coin.name}/>
               )})
           }
         </ScrollView>

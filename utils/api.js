@@ -177,13 +177,13 @@ export const getBitcoinPriceIndex = (startDate, endDate) => {
 ///////////////////////////// Communites APIs ///////////////////////
 export async function loadDCB() {
   const searchUrl = `http://gall.dcinside.com/board/lists/?id=bitcoins`;
-  const searchUrByRec = `http://gall.dcinside.com/board/lists/?id=bitcoins&page=1&exception_mode=recommend`;
-  const response = await fetch(searchUrl);
+  const searchUrlByRec = `http://gall.dcinside.com/board/lists/?id=bitcoins&page=1&exception_mode=recommend`;
+  const response = await fetch(searchUrlByRec);
 
   const htmlString = await response.text();
   const cheerio = require('cheerio-without-node-native');
   const $ = cheerio.load(htmlString);
-  return console.log(response);
+  return console.log(response._bodyText);
   // response의 bodyText가 ""임. 다른 사이트는 내용이 있는 반면.
     // .map((_, e) => console.log(e))
     // ({

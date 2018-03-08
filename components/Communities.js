@@ -19,9 +19,6 @@ class Communities extends Component {
     selectSites: ''
   }
 
-  componentDidMount() {
-  }
-
   renderContents() {
     const { selectSites } = this.state;
 

@@ -32,7 +32,7 @@ class Chart extends Component {
 
     return (
       <View style={{flex:1, flexDirection: 'column'}}>
-        <View style={ { width, height: height-100, flexDirection: 'row', borderWidth: 1 } }>
+        <View style={ { width, height: height-100, flexDirection: 'row'} }>
           {isLoading && (
              <ActivityIndicator
                 size="large"
@@ -48,6 +48,7 @@ class Chart extends Component {
             formatLabel={value => {
               value = value.toString().split("")
               value = value.filter(n => value.indexOf(n) < value.length - 3).join("")
+              value == '10000' ? value = '10' : value // Exception : when value is '10000', it appeared '10000', not '10' for no reason.
               return `$ ${value}K`
             } }
           />
@@ -77,7 +78,7 @@ class Chart extends Component {
              formatLabel={value => `${value}`}
           />
         </View>
-        <View style={{flex:1, flexDirection: 'row', borderWidth: 1, borderColor: 'blue'}}>
+        <View style={{flex:1, flexDirection: 'row'}}>
           <View style={{flex:1, flexDirection: 'row'}}>
             <View style={{flex:1}}>
               <Svg
