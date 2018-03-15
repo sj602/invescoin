@@ -12,7 +12,9 @@
   "dependencies": {
     "express": "^4.16.2",
     "google-trends-api": "^4.5.0",
-    "nodemon": "^1.15.1"
+    "nodemon": "^1.15.1",
+    "twit": "^2.2.9",
+    "assert": "^1.4.1"
   },
   "devDependencies": {}
 }

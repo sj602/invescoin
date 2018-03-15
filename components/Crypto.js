@@ -15,7 +15,7 @@ export default class Crypto extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount')
+    // console.log('componentDidMount')
     // setTimeout(() => {
     //   this.setState({loading: false})
     // }, 8000)
@@ -26,7 +26,7 @@ export default class Crypto extends Component {
   renderBithumbPrice(coin) {
     return (
       <Text>
-        빗썸: {coin.bithumbPrice && addComma3letters(coin.bithumbPrice)}
+        빗썸: {coin.bithumbPrice}
       </Text>
     )
   }
@@ -34,7 +34,7 @@ export default class Crypto extends Component {
   renderUpbitPrice(coin) {
     return (
       <Text>
-        업비트: {coin.upbitPrice && addComma3letters(coin.upbitPrice)}
+        업비트: {coin.upbitPrice}
       </Text>
     )
   }
@@ -42,7 +42,7 @@ export default class Crypto extends Component {
   renderBittrexPrice(coin) {
     return (
       <Text>
-        Bittrex: {coin.bittrexPrice && addComma3letters(coin.bittrexPrice)}
+        Bittrex: {coin.bittrexPrice}
       </Text>
     )
   }
@@ -50,7 +50,7 @@ export default class Crypto extends Component {
   renderBitfinexPrice(coin) {
     return (
       <Text>
-        Bitfinex: {coin.bitfinexPrice && addComma3letters(coin.bitfinexPrice)}
+        Bitfinex: {coin.bitfinexPrice}
       </Text>
     )
   }
@@ -78,9 +78,13 @@ export default class Crypto extends Component {
             { coin.upbitPrice ? this.renderUpbitPrice(coin) : null}
             { coin.bittrexPrice ? this.renderBittrexPrice(coin) : null}
             { coin.bitfinexPrice ? this.renderBitfinexPrice(coin) : null}
-            <Text>
-              김치프리미엄: {coin.kimchiPremium && addComma3letters(coin.kimchiPremium.toFixed(0))} ({coin.kpPercent && coin.kpPercent}%)
-            </Text>
+            { !isNaN(coin.kimchiPremium) ? (
+              <Text>
+                김·프: {coin.kimchiPremium} ({coin.kpPercent && isNaN(coin.kpPercent) ? null : coin.kpPercent}%)
+              </Text>
+            ) :
+              null
+            }
           </View>
         </View>
       </View>
@@ -97,7 +101,6 @@ const styles = StyleSheet.create({
   coinImage: {
     flex:1,
     flexDirection: 'row',
-    // justifyContent: 'center',
     alignItems: 'center',
   },
   symbolView: {
@@ -109,7 +112,5 @@ const styles = StyleSheet.create({
   coinPrice: {
     flex:1,
     flexDirection: 'column',
-    // justifyContent: 'center',
-    // alignItems: 'center'
   }
 });

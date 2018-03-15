@@ -1,5 +1,24 @@
 import { Notifications, Permissions } from 'expo';
 
+export const minus100AndFixed = number => {
+  if(number > 100){ //for some reason, kimchiPremium percent(kpPercent) is displayed added 100 sometimes
+    return (number-100).toFixed(2); //19.22
+    console.log('100보다 크다')
+  }else {
+    return number.toFixed(2);
+    console.log('100보다 작다')
+  }
+}
+
+export const changeFixedDecimalPoints = number => {
+  number = number.toString(); // ex: 19.223 -> '19.223'
+  if(number.indexOf('.') !== -1 && number.split('.')[1].length > 2){ //'19.223' => ['19', '223'] -> '223'.length
+    return Number(number).toFixed(2); //19.22
+  }else {
+    return Number(number);
+  }
+}
+
 export const addComma3letters = data => {
   return data = data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }

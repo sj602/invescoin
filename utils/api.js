@@ -1,3 +1,8 @@
+import {
+  changeFixedDecimalPoints,
+  addComma3letters
+} from './helpers';
+
 const Coinmarketcap_URL = `https://api.coinmarketcap.com/v1/`;
 const Bithumb_URL = `https://api.bithumb.com/public/ticker`;
 const Upbit_URL = `https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/1?code=CRIX.UPBIT.KRW-`;
@@ -6,9 +11,10 @@ const Bitfinex_URL = `https://api.cryptowat.ch/markets/bitfinex`;
 const Dollar_URL = `http://api.fixer.io/latest?base=USD`;
 const Transactions_URL = `https://api.blockchain.info/stats`;
 const Inflation_URL = `https://inflation-api.herokuapp.com/api/?`;
-// const GoogleTrends_URL = `http://192.168.108.2:3000/interestOverTime`;
 const GoogleTrends_URL = `https://invescoin-52d55.appspot.com/interestOverTime`; // Google Cloud Server
 const BitcoinPriceIndex_URL = `https://api.coindesk.com/v1/bpi/historical/close.json`;
+const Twitter_URL = `http://192.168.108.2:3000/twitter`;
+
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
@@ -24,6 +30,8 @@ export const marketBithumb = (coin) => {
   )
   .then(res => res.json())
   .then(data => data['data']['closing_price'])
+  .then(data => changeFixedDecimalPoints(data))
+  .then(data => addComma3letters(data))
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -37,6 +45,8 @@ export const marketUpbit = (coin) => {
   )
   .then(res => res.json())
   .then(data => data[0].tradePrice)
+  .then(data => changeFixedDecimalPoints(data))
+  .then(data => addComma3letters(data))
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -50,6 +60,8 @@ export const marketBittrex = (coin) => {
   )
   .then(res => res.json())
   .then(data => data.result[0].Last.toFixed(2))
+  .then(data => changeFixedDecimalPoints(data))
+  .then(data => addComma3letters(data))
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -63,6 +75,8 @@ export const marketBitfinex = (coin) => {
   )
   .then(res => res.json())
   .then(data => data.result['price'])
+  .then(data => changeFixedDecimalPoints(data))
+  .then(data => addComma3letters(data))
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -76,6 +90,7 @@ export const getGlobalMarketCap = () => {
   )
   .then(res => res.json())
   .then(data => data['total_market_cap_usd'])
+  .then(data => addComma3letters(data))
   .catch(e => console.log('Error occurred : ', e))
 }
 
@@ -267,3 +282,18 @@ export async function loadReddit() {
       thumbnail: $("a[data-event-action='thumbnail'] img", e).attr('src')
     }));
 }
+
+//////////////// Twitter API /////////////////
+
+export const getTweets = () => {
+  return fetch(
+    `${Twitter_URL}`,
+    {
+      method: `GET`,
+      headers
+    }
+  )
+  .then(res => res.json())
+  .then(data => data['statuses'])
+  .catch(e => console.log('Error occurred : ', e))
+};

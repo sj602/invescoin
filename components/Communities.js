@@ -13,6 +13,7 @@ import {
   getDCBData,
 } from '../actions/index';
 import * as api from '../utils/api';
+import * as Animatable from 'react-native-animatable';
 
 class Communities extends Component {
   state = {
@@ -347,7 +348,7 @@ class Communities extends Component {
     const { selectSites } = this.state;
 
     return (
-      <View>
+      <View style={styles.container}>
         <View>
           <Button
             onPress={() => {
@@ -409,22 +410,24 @@ export default connect(mapStateToProps, {
   getDCBData,
 })(Communities);
 
-const styles = StyleSheet.create(
-  {
-    WebViewStyle: {
-       justifyContent: 'center',
-       alignItems: 'center',
-       flex:1,
-       marginTop: (Platform.OS) === 'ios' ? 20 : 0
-    },
-
-    ActivityIndicatorStyle: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  WebViewStyle: {
+     justifyContent: 'center',
+     alignItems: 'center',
+     flex:1,
+     marginTop: (Platform.OS) === 'ios' ? 20 : 0
+  },
+  ActivityIndicatorStyle: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      alignItems: 'center',
+      justifyContent: 'center'
+  }
 });

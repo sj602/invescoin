@@ -25,7 +25,7 @@ export default class Calendar extends Component {
 
     if(selectCalendar === '') {
       return (
-        <View>
+        <View style={styles.container}>
           <Button
             onPress={() => this.setState({ selectCalendar: 'coin' })}
             title='코인 호재 달력'
@@ -78,24 +78,23 @@ export default class Calendar extends Component {
   }
 }
 
-
-
-const styles = StyleSheet.create(
-  {
-    WebViewStyle: {
-       justifyContent: 'center',
-       alignItems: 'center',
-       flex:1,
-       marginTop: (Platform.OS) === 'ios' ? 20 : 0
-    },
-
-    ActivityIndicatorStyle: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+  },
+  WebViewStyle: {
+     justifyContent: 'center',
+     alignItems: 'center',
+     flex:1,
+     marginTop: (Platform.OS) === 'ios' ? 20 : 0
+  },
+  ActivityIndicatorStyle: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      alignItems: 'center',
+      justifyContent: 'center'
+  }
 });

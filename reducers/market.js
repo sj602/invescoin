@@ -6,6 +6,10 @@ import {
   GET_WON_BY_DOLLAR,
   INIT_COINS,
 } from '../actions/types';
+import {
+  minus100AndFixed,
+  addComma3letters
+} from '../utils/helpers';
 
 export default function marketReducer(state = {}, action) {
   switch (action.type) {
@@ -31,6 +35,7 @@ export default function marketReducer(state = {}, action) {
           ...(state.coins || {}),
           [action.coin.name]: {
             ...(( state.coins && state.coins[action.coin.name] ) || {}),
+            name: action.name,
             img: action.img,
             symbolBig: action.symbolBig,
             symbolSmall: action.symbolSmall
@@ -59,8 +64,12 @@ export default function marketReducer(state = {}, action) {
             [action.coin.name]: {
               ...(( state.coins && state.coins[action.coin.name] ) || {}),
               upbitPrice: action.upbitPrice,
-              kimchiPremium: (action.upbitPrice - Number(coin.bittrexPrice || coin.bitfinexPrice) * state.wonByDollarPrice),
-              kpPercent: coin.kpPercent ? coin.kpPercent : (Number(coin.kimchiPremium) / Number(((coin.bittrexPrice || coin.bitfinexPrice) || undefined)) * state.wonByDollarPrice) * 100,
+              kimchiPremium: addComma3letters((action.upbitPrice - (Number(coin.bittrexPrice || coin.bitfinexPrice) * state.wonByDollarPrice)).toFixed(0)),
+              kpPercent: coin.kpPercent
+                         ?
+                         coin.kpPercent
+                         :
+                         minus100AndFixed((Number(coin.kimchiPremium) / (Number(coin.bittrexPrice || coin.bitfinexPrice) * state.wonByDollarPrice)) * 100),
             }
           }
         }
@@ -74,8 +83,12 @@ export default function marketReducer(state = {}, action) {
             [action.coin.name]: {
               ...(( state.coins && state.coins[action.coin.name] ) || {}),
               bittrexPrice: action.bittrexPrice,
-              kimchiPremium: (coin.upbitPrice || coin.bithumbPrice - Number(action.bittrexPrice) * state.wonByDollarPrice),
-              kpPercent: coin.kpPercent ? coin.kpPercent : (Number(coin.kimchiPremium) / (Number(action.bittrexPrice) * state.wonByDollarPrice) * 100),
+              kimchiPremium: addComma3letters((coin.upbitPrice || coin.bithumbPrice - Number(action.bittrexPrice) * state.wonByDollarPrice).toFixed(0)),
+              kpPercent: coin.kpPercent
+                         ?
+                         coin.kpPercent
+                         :
+                         minus100AndFixed((Number(coin.kimchiPremium) / (Number(action.bittrexPrice) * state.wonByDollarPrice)) * 100),
             }
           }
         }
@@ -88,9 +101,13 @@ export default function marketReducer(state = {}, action) {
             ...(state.coins || {}),
             [action.coin.name]: {
               ...(( state.coins && state.coins[action.coin.name] ) || {}),
-              bitfinexPrice: action.bitfinexPrice,
-              kimchiPremium: ((coin.upbitPrice || coin.bithumbPrice) - (Number(action.bitfinexPrice || coin.bittrexPrice) * state.wonByDollarPrice)),
-              kpPercent: coin.kpPercent ? coin.kpPercent : (Number(coin.kimchiPremium) / (Number(action.bitfinexPrice) * state.wonByDollarPrice) * 100),
+              bitfinexPrice:  action.bitfinexPrice,
+              kimchiPremium: addComma3letters(((coin.upbitPrice || coin.bithumbPrice) - (Number(action.bitfinexPrice || coin.bittrexPrice) * state.wonByDollarPrice)).toFixed(0)),
+              kpPercent: coin.kpPercent
+                         ?
+                         coin.kpPercent
+                         :
+                         minus100AndFixed((Number(coin.kimchiPremium) / (Number(action.bitfinexPrice) * state.wonByDollarPrice)) * 100),
             }
           }
         }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   View, Text, TouchableOpacity, Clipboard,
-  Animated,
+  StyleSheet,
 } from 'react-native';
 
 export default class Donate extends Component {
@@ -10,15 +10,7 @@ export default class Donate extends Component {
     this.state = {
       BTC: '1APTUw7u8AjDMfFvqqUypDqSmC4pS5E43R',
       ETH: '0xc0f7E9129158f2A73d63ee13F171Dd8Afad9cA19',
-      x: new Animated.Value(100)
     }
-  }
-
-  aniClick() {
-    Animated.spring(
-      this.state.x,
-      {toValue: 200}
-    ).start();
   }
 
   click(coin) {
@@ -34,7 +26,7 @@ export default class Donate extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <View>
           <Text>
             더 좋은 인베스코인이 되기 위해 노력하겠습니다.
@@ -53,14 +45,14 @@ export default class Donate extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() => this.aniClick()}
-        >
-          <Animated.View style={{backgroundColor: 'red',
-                                 height: 40, width: this.state.x}}>
-          </Animated.View>
-        </TouchableOpacity>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+})

@@ -31,7 +31,7 @@ class Chart extends Component {
     const {isLoading} = this.state;
 
     return (
-      <View style={{flex:1, flexDirection: 'column'}}>
+      <View style={styles.container}>
         <View style={ { width, height: height-100, flexDirection: 'row'} }>
           {isLoading && (
              <ActivityIndicator
@@ -128,5 +128,13 @@ class Chart extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+  },
+});
 
 export default Chart;

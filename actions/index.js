@@ -35,6 +35,7 @@ export const getBTCPercentile = () => dispatch => {
 export const initCoins = (coin) => dispatch => {
   return dispatch({
     type: INIT_COINS,
+    name: coin.name,
     symbolBig: coin.symbolBig,
     symbolSmall: coin.symbolSmall,
     img: coin.img,
@@ -45,18 +46,12 @@ export const initCoins = (coin) => dispatch => {
 export const getCoinPrice = (coin) => dispatch => {
   api.marketBithumb(coin.symbolBig)
   .then(data => dispatch({type: GET_COIN_PRICE, bithumbPrice: data, coin}))
-    .then(() => {
-      api.marketUpbit(coin.symbolBig)
-      .then(data => dispatch({type: GET_COIN_PRICE, upbitPrice: data, coin}))
-    })
-    .then(() => {
-      api.marketBittrex(coin.symbolSmall)
-      .then(data => dispatch({type: GET_COIN_PRICE, bittrexPrice: data, coin}))
-    })
-    .then(() => {
-      api.marketBitfinex(coin.symbolSmall)
-      .then(data => dispatch({type: GET_COIN_PRICE, bitfinexPrice: data, coin}))
-    })
+  api.marketUpbit(coin.symbolBig)
+  .then(data => dispatch({type: GET_COIN_PRICE, upbitPrice: data, coin}))
+  api.marketBittrex(coin.symbolSmall)
+  .then(data => dispatch({type: GET_COIN_PRICE, bittrexPrice: data, coin}))
+  api.marketBitfinex(coin.symbolSmall)
+  .then(data => dispatch({type: GET_COIN_PRICE, bitfinexPrice: data, coin}))
 }
 
 export const getWonByDollar = () => dispatch => {

@@ -235,7 +235,7 @@ class Bubble extends Component {
     }
   }
 
-  renderNVC() {
+  renderNVT() {
     if(this.state.NVTShow) {
       let { marketCap, transactionsVolume } = this.props.state.bubble.NVT_Ratio;
       let ratio = (marketCap / transactionsVolume).toFixed(2);
@@ -278,35 +278,35 @@ class Bubble extends Component {
             </Text>
           </View>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          { this.state.showHelpNVT
-            ? (
-                <Icon.Button
-                  name="question-circle"
-                  backgroundColor="#3b5998"
-                  onPress={() => {
-                    this.setState(state => ({
-                      showHelpNVT: !state.showHelpNVT
-                    }))
-                  }}
-                >
-                  사용 방법 닫기
-                </Icon.Button>
+            { this.state.showHelpNVT
+              ? (
+                  <Icon.Button
+                    name="question-circle"
+                    backgroundColor="#3b5998"
+                    onPress={() => {
+                      this.setState(state => ({
+                        showHelpNVT: !state.showHelpNVT
+                      }))
+                    }}
+                  >
+                    사용 방법 닫기
+                  </Icon.Button>
+                )
+              : (
+                  <Icon.Button
+                    name="question-circle"
+                    backgroundColor="#3b5998"
+                    onPress={() => {
+                      this.setState(state => ({
+                        showHelpNVT: !state.showHelpNVT
+                      }))
+                    }}
+                  >
+                    사용 방법 보기
+                  </Icon.Button>
               )
-            : (
-                <Icon.Button
-                  name="question-circle"
-                  backgroundColor="#3b5998"
-                  onPress={() => {
-                    this.setState(state => ({
-                      showHelpNVT: !state.showHelpNVT
-                    }))
-                  }}
-                >
-                  사용 방법 보기
-                </Icon.Button>
-            )
-          }
-          { this.renderHelpNVT() }
+            }
+            { this.renderHelpNVT() }
           </View>
         </View>
       )
@@ -431,86 +431,90 @@ class Bubble extends Component {
     }
   }
 
-
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <ScrollView>
-          <TouchableOpacity>
-            <Icon.Button
-              name="google"
-              backgroundColor="#3b5998"
-              onPress={() => {
-                this.setState(state => ({
-                  googleShow: !state.googleShow
-                }))
-              }}
-            >
-              구글 트렌드 데이터 비교
-            </Icon.Button>
-          </TouchableOpacity>
-          { this.renderGoogle() }
-
-          <TouchableOpacity>
-            <Icon.Button
-              name="area-chart"
-              backgroundColor="#3b5998"
-              onPress={() => {
-                this.setState(state => ({
-                  NVTShow: !state.NVTShow
-                }))
-              }}
-            >
-              NVT Ratio
-            </Icon.Button>
-          </TouchableOpacity>
-          { this.renderNVC() }
-
-          <TouchableOpacity>
-            <Icon.Button
-              name="bitcoin"
-              backgroundColor="#3b5998"
-              onPress={() => {
-                this.setState(state => ({
-                  priceRelationShow: !state.priceRelationShow
-                }))
-              }}
-            >
-              암호화폐 가격연관성 비교
-            </Icon.Button>
-          </TouchableOpacity>
-          { this.renderPriceRelation() }
-
-          <TouchableOpacity>
-            <Icon.Button
-              name="bitcoin"
-              backgroundColor="#3b5998"
-              onPress={() => {
-                this.setState(state => ({
-                  historicBubbleShow: !state.historicBubbleShow
-                }))
-              }}
-            >
-              버블 시가총액 비교
-            </Icon.Button>
-          </TouchableOpacity>
-          { this.renderHistoricBubble() }
-
-          <TouchableOpacity>
-            <Icon.Button
-              name="bitcoin"
-              backgroundColor="#3b5998"
-              onPress={() => {
-                this.setState(state => ({
-                  MVPQShow: !state.MVPQShow
-                }))
-              }}
-            >
-              MV=PQ (화폐수량설) 모델
-            </Icon.Button>
-          </TouchableOpacity>
-          { this.renderMVPQ() }
-
+          <View style={styles.menuComponent}>
+            <TouchableOpacity>
+              <Icon.Button
+                name="google"
+                backgroundColor="#3b5998"
+                onPress={() => {
+                  this.setState(state => ({
+                    googleShow: !state.googleShow
+                  }))
+                }}
+              >
+                구글 트렌드 데이터 비교
+              </Icon.Button>
+            </TouchableOpacity>
+            { this.renderGoogle() }
+          </View>
+          <View style={styles.menuComponent}>
+            <TouchableOpacity>
+              <Icon.Button
+                name="area-chart"
+                backgroundColor="#3b5998"
+                onPress={() => {
+                  this.setState(state => ({
+                    NVTShow: !state.NVTShow
+                  }))
+                }}
+              >
+                NVT Ratio
+              </Icon.Button>
+            </TouchableOpacity>
+            { this.renderNVT() }
+          </View>
+          <View style={styles.menuComponent}>
+            <TouchableOpacity>
+              <Icon.Button
+                name="bitcoin"
+                backgroundColor="#3b5998"
+                onPress={() => {
+                  this.setState(state => ({
+                    priceRelationShow: !state.priceRelationShow
+                  }))
+                }}
+              >
+                암호화폐 가격연관성 비교
+              </Icon.Button>
+            </TouchableOpacity>
+            { this.renderPriceRelation() }
+          </View>
+          <View style={styles.menuComponent}>
+            <TouchableOpacity>
+              <Icon.Button
+                name="bitcoin"
+                backgroundColor="#3b5998"
+                onPress={() => {
+                  this.setState(state => ({
+                    historicBubbleShow: !state.historicBubbleShow
+                  }))
+                }}
+              >
+                버블 시가총액 비교
+              </Icon.Button>
+            </TouchableOpacity>
+            { this.renderHistoricBubble() }
+          </View>
+          <View style={styles.menuComponent}>
+            <TouchableOpacity>
+              <Icon.Button
+                name="bitcoin"
+                backgroundColor="#3b5998"
+                onPress={() => {
+                  this.setState(state => ({
+                    MVPQShow: !state.MVPQShow
+                  }))
+                }}
+              >
+                MV=PQ (화폐수량설) 모델
+              </Icon.Button>
+            </TouchableOpacity>
+            { this.renderMVPQ() }
+          </View>
         </ScrollView>
       </View>
     )
@@ -531,6 +535,10 @@ export default connect(mapStateToProps, {
 
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   ratioRed: {
     color: 'red'
   },
@@ -541,6 +549,9 @@ const styles = StyleSheet.create({
     color: 'green'
   },
   component: {
-    marginBottom: 10
+    marginBottom: 10,
+  },
+  menuComponent: {
+    marginBottom: 20
   }
 });

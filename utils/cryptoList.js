@@ -78,18 +78,6 @@ export const cryptoList = [
     img: require('../assets/images/xmr.png'),
   },
   {
-    name: 'Tron',
-    symbolBig: 'TRON',
-    symbolSmall: 'tron',
-    img: require('../assets/images/xmr.png'),
-  },
-  {
-    name: 'Icon',
-    symbolBig: 'ICX',
-    symbolSmall: 'icx',
-    img: require('../assets/images/icx.png'),
-  },
-  {
     name: 'Quantum',
     symbolBig: 'QTUM',
     symbolSmall: 'qtum',
