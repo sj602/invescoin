@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   View, Text, TouchableOpacity, WebView,
   ActivityIndicator, Platform, StyleSheet,
-  Button, ScrollView, Image, Linking
+  Button, ScrollView, Image, Linking,
+  Picker,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -99,6 +100,7 @@ class Communities extends Component {
 
       case 'red':
         const { reddit } = this.props.state.communities;
+        this.props.getRedditData();
 
         return (
           <ScrollView>
@@ -181,6 +183,7 @@ class Communities extends Component {
         )
       case 'ddg':
         const { ddengle } = this.props.state.communities;
+        this.props.getDdengleData();
 
         return (
           <ScrollView>
@@ -255,6 +258,7 @@ class Communities extends Component {
         )
       case 'cla':
         const { clien } = this.props.state.communities;
+        this.props.getClienData();
 
         return (
           <ScrollView>
@@ -349,47 +353,27 @@ class Communities extends Component {
 
     return (
       <View style={styles.container}>
-        <View>
-          <Button
-            onPress={() => {
-              this.props.getDCBData();
-              this.setState({ selectSites: 'dcb' })
-            }}
-            title='디시인사이드 비트코인 갤러리 (개발중)'
-          />
+        <View style={{flex: 1, flexDirection: 'row', maxHeight: 70, borderWidth: 0.5}}>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{textAlign: 'center'}}>
+              커뮤니티 선택
+            </Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Picker
+              style={{width: 150, borderWidth: 1}}
+              selectedValue={selectSites}
+              onValueChange={(selectSites) => this.setState({selectSites})}
+              mode='dropdown'
+            >
+              <Picker.Item label="디시인사이드 비트코인 갤러리" value="dcb" />
+              <Picker.Item label="땡글" value="ddg" />
+              <Picker.Item label="클리앙" value="cla" />
+              <Picker.Item label="레딧" value="red" />
+            </Picker>
+          </View>
         </View>
-        <View>
-          <Button
-            onPress={() => {
-              this.props.getDdengleData();
-              this.setState({ selectSites: 'ddg' })
-            }}
-            title='땡글'
-          />
-        </View>
-        <View>
-          <Button
-            onPress={() => this.setState({ selectSites: 'cip' })}
-            title='코인판 (회원제)'
-          />
-        </View>
-        <View>
-          <Button
-          onPress={() => {
-            this.props.getClienData();
-            this.setState({ selectSites: 'cla' })
-          }}
-            title='클리앙'
-          />
-        </View>
-        <View>
-          <Button
-            onPress={() => {
-              this.props.getRedditData();
-              this.setState({ selectSites: 'red' })
-            }}
-            title='레딧'
-          />
+        <View style={{flex: 1}}>
           {this.renderContents()}
         </View>
       </View>
@@ -413,13 +397,8 @@ export default connect(mapStateToProps, {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: 'white',
-  },
-  WebViewStyle: {
-     justifyContent: 'center',
-     alignItems: 'center',
-     flex:1,
-     marginTop: (Platform.OS) === 'ios' ? 20 : 0
   },
   ActivityIndicatorStyle: {
       position: 'absolute',

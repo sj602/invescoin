@@ -52,7 +52,7 @@ export default class Tweets extends Component {
             <View style={{flexDirection: 'row'}}>
               <Icon
                 name="comments"
-                size={10}
+                size={15}
               />
               <Text>
                 댓글
@@ -64,7 +64,7 @@ export default class Tweets extends Component {
               <Icon
                 name="retweet"
                 color="green"
-                size={10}
+                size={15}
               />
               <Text>
                 {item['retweet_count']}
@@ -76,7 +76,7 @@ export default class Tweets extends Component {
               <Icon
                 name="heart"
                 color="red"
-                size={10}
+                size={15}
               />
               <Text>
                 {item['favorite_count']}
