@@ -285,15 +285,14 @@ export async function loadReddit() {
 
 //////////////// Twitter API /////////////////
 
-export const getTweets = () => {
+export const getTweets = (userId) => {
   return fetch(
-    `${Twitter_URL}`,
+    `${Twitter_URL}/${userId}`,
     {
       method: `GET`,
       headers
     }
   )
   .then(res => res.json())
-  .then(data => data['statuses'])
   .catch(e => console.log('Error occurred : ', e))
 };

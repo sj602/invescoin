@@ -5,7 +5,7 @@
     "name": "InvesCoin",
     "description": "Helping investment to Cryptocurrencies",
     "slug": "invescoin",
-    "version": "2.0",
+    "version": "2.1",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -16,7 +16,7 @@
     },
     "android": {
      "package": "com.jinapp.invescoin",
-     "versionCode": 2
-    }
+     "versionCode": 3
+   },
   },
 }

@@ -47,8 +47,7 @@ class Communities extends Component {
                       onPress={() => Linking.openURL(data)}
                     >
                       <View
-                        style={{flex:1, margin: 5, flexDirection: 'row', borderWidth: 1}}
-                        key={reddit[k]}
+                        style={{flex:1, flexDirection: 'row', borderWidth: StyleSheet.hairlineWidth}}
                       >
                         <View
                           style={{flex:1, margin: 3, flexDirection: 'column'}}
@@ -123,7 +122,7 @@ class Communities extends Component {
                       onPress={() => Linking.openURL(data)}
                     >
                       <View
-                        style={{flex:1, margin: 5, flexDirection: 'row', borderWidth: 1}}
+                        style={{flex:1, flexDirection: 'row', borderWidth: StyleSheet.hairlineWidth}}
                         key={reddit[k]}
                       >
                         <View
@@ -203,7 +202,7 @@ class Communities extends Component {
                   onPress={() => Linking.openURL(data)}
                 >
                   <View
-                    style={{flex:1, margin: 5, flexDirection: 'row', borderWidth: 1}}
+                    style={{flex:1, flexDirection: 'row', borderWidth: StyleSheet.hairlineWidth}}
                     key={ddengle[k]}
                   >
                     <View
@@ -278,7 +277,7 @@ class Communities extends Component {
                   onPress={() => Linking.openURL('https://clien.net' + data)}
                 >
                   <View
-                    style={{flex:1, margin: 5, flexDirection: 'row'}}
+                    style={{flex:1, flexDirection: 'row', borderWidth: StyleSheet.hairlineWidth}}
                     key={clien[k]}
                   >
                     <View

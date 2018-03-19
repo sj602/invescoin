@@ -2,25 +2,97 @@ import React, { Component } from 'react';
 import {
   View, Text, StyleSheet,
   Image, FlatList, Linking,
-  TouchableOpacity,
+  TouchableOpacity, ScrollView, WebView,
+  Modal, TouchableHighlight
 } from 'react-native';
 import * as api from '../utils/api';
+import {
+  tweetList,
+  peopleList,
+} from '../utils/tweetList';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Tweets extends Component {
   state = {
-    data: []
+    data: [],
+    isModalVisible: false,
   }
 
-  componentDidMount() {
-    return api.getTweets().then(data => this.setState({data}))
+  // componentDidMount() {
+  //   return api.getTweets().then(data => this.setState({data}))
+  // }
+
+  renderModal() {
+    return (
+      <View style={styles.modalContent}>
+        <View>
+          <Text>Hello World!</Text>
+          <TouchableHighlight
+            onPress={() => {
+              this.setState((state) => {isModalVisible: !state.isModalVisible});
+            }}>
+            <Text>Hide Modal</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    )
   }
 
-  renderItem(item) {
+  renderPeople() {
+    return peopleList.map(person => {
+      return (
+        <TouchableOpacity
+          /* onPress={() => this.setState({isModalVisible: true}) } */
+          onPress={() => api.getTweets(person.name).then(data => this.setState({data}))}
+          key={person.name}
+        >
+          <View
+            style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 5}}
+            key={person.name}
+          >
+            <Text
+              style={{textAlign: 'center', fontSize: 8}}
+              key={person.name}
+            >
+              {person.name}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )
+    })
+  }
+
+  renderCoins() {
+    return tweetList.map(coin => {
+      return (
+        <View
+          style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 5}}
+          key={coin.symbolBig}
+        >
+          <Image
+            source={coin.img}
+            style={{width: 15, height: 15}}
+          />
+          <Text style={{textAlign: 'center', fontSize: 8}}>
+            {coin.symbolBig}
+          </Text>
+        </View>
+      )
+    })
+  }
+
+  renderTweets(item) {
     return (
       <View key={"tweets"+item['id']} style={styles.tweetComponent}>
         <TouchableOpacity
-          onPress={() => Linking.openURL(item['entities']['urls'][0]['expanded_url'])}
+          onPress={() => {
+            return (
+              <WebView
+                source={{uri: `https://twitter.com/${item['user']['screen_name']}/status/${item['id_str']}`}}
+                style={{flex: 1}}
+              />
+            )
+          }}
         >
           <View style={styles.tweetContents}>
             <View style={styles.tweetImg}>
@@ -34,7 +106,10 @@ export default class Tweets extends Component {
                 <Text style={{flex: 1}}>
                   {item['user']['name']}
                 </Text>
-                <Text style={{flex: 1}}>
+                <Text style={{flex: 1, fontSize: 8}}>
+                  @{item['user']['screen_name']}
+                </Text>
+                <Text style={{flex: 1, fontSize: 8}}>
                   {item['created_at']}
                 </Text>
               </View>
@@ -90,14 +165,39 @@ export default class Tweets extends Component {
 
   render() {
     const { data } = this.state;
-
+    console.log(this.state.isModalVisible)
     return (
       <View style={styles.container}>
-        <FlatList
-           key={"twitter"}
-           data={data}
-           renderItem={ ({item}) => this.renderItem(item) }
-        />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.isModalVisible}
+          onRequestClose={() => this.setState({isModalVisible: false})}
+          onBackdropPress={() => this.setState({ isModalVisible: false })}
+        >
+          {this.renderModal()}
+        </Modal>
+        <View style={{flex: 1}}>
+          <ScrollView
+            horizontal={true}
+            style={{flex: 1, maxHeight: 40}}
+          >
+            {this.renderCoins()}
+          </ScrollView>
+          <ScrollView
+            horizontal={true}
+            style={{flex: 1, maxHeight: 40}}
+          >
+            {this.renderPeople()}
+          </ScrollView>
+        </View>
+        <View style={{flex: 7}}>
+          <FlatList
+             key={"twitter"}
+             data={data}
+             renderItem={ ({item}) => this.renderTweets(item) }
+          />
+        </View>
       </View>
     )
   }
@@ -112,7 +212,8 @@ const styles = StyleSheet.create({
   tweetComponent: {
     flex: 1,
     flexDirection: 'column',
-    borderWidth: 1
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'grey'
   },
   tweetContents: {
     flex: 1,
@@ -132,8 +233,17 @@ const styles = StyleSheet.create({
   },
   tweetBodyInfo: {
     flex: 1,
+    flexDirection: 'row'
   },
   tweetText: {
     flex: 1,
-  }
+  },
+  modalContent: {
+   backgroundColor: 'white',
+   padding: 22,
+   justifyContent: 'center',
+   alignItems: 'center',
+   borderRadius: 4,
+   borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
 });

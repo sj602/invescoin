@@ -36,8 +36,19 @@ const T = new Twit({
   timeout: 60*1000
 })
 
-app.get('/twitter', (req, res) => {
-  return T.get('search/tweets', {q: 'crypto since:2018-01-01', count: 30}, (err, data, response) => {
+// app.get('/twitter', (req, res) => {
+//   return T.get('search/tweets', {q: 'crypto since:2018-01-01', count: 30}, (err, data, response) => {
+//     try {
+//       res.json(data)
+//     }
+//     catch(err) {
+//       console.log('server error: ', err)
+//     }
+//   })
+// });
+
+app.get('/twitter/:userId', (req, res) => {
+  return T.get('statuses/user_timeline', {screen_name: req.params.userId, count: 30}, (err, data, response) => {
     try {
       res.json(data)
     }

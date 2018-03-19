@@ -74,7 +74,7 @@ export const Stacks = StackNavigator({
                     />
                   </TouchableOpacity>,
       headerStyle: {
-        backgroundColor: 'black',
+        backgroundColor: 'rgb(36,36,36)',
         marginTop: 24
       },
       title: 'InvesCoin',
